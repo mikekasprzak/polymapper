@@ -1,8 +1,8 @@
 // - ------------------------------------------------------------------------------------------ - //
 #include <iostream>
 
+#include <WhitespaceTokenizer/WhitespaceTokenizer.h>
 #include "PolyMap.h"
-#include "WhitespaceTokenizer.h"
 
 using namespace std;
 // - ------------------------------------------------------------------------------------------ - //

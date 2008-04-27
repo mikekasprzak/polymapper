@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-#include "Data/DataBlock.h"
+#include <Data/DataBlock.h>
 // - ------------------------------------------------------------------------------------------ - //
 class cWhitespaceTokenizer {
 	std::stringstream Data;

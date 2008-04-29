@@ -61,24 +61,24 @@ void cPolyMap::Load( const char* FileName ) {
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
 			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
-		else if ( File.IsStringToken( "Curve" ) ) {
-			CreateMode = ElementMode;
-			File.NextToken();
-			Element.push_back( cPolyMapElement( PME_CURVE ) );
-
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
-		}
-		else if ( File.IsStringToken( "Bone" ) ) {
-			CreateMode = ElementMode;
-			File.NextToken();
-			Element.push_back( cPolyMapElement( PME_BONE ) );
-
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
-		}
+//		else if ( File.IsStringToken( "Curve" ) ) {
+//			CreateMode = ElementMode;
+//			File.NextToken();
+//			Element.push_back( cPolyMapElement( PME_CURVE ) );
+//
+//			Element.back().Center.x = File.StepFloatToken() + Offset.x;
+//			Element.back().Center.y = File.StepFloatToken() + Offset.y;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//		}
+//		else if ( File.IsStringToken( "Bone" ) ) {
+//			CreateMode = ElementMode;
+//			File.NextToken();
+//			Element.push_back( cPolyMapElement( PME_BONE ) );
+//
+//			Element.back().Center.x = File.StepFloatToken() + Offset.x;
+//			Element.back().Center.y = File.StepFloatToken() + Offset.y;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//		}
 		
 		else if ( File.IsStringToken( "Link" ) ) {
 			CreateMode = LinkMode;
@@ -188,12 +188,12 @@ void cPolyMap::Save( const char* FileName ) const {
 		else if ( Element[idx].Type == PME_POLY ) {
 			File.Write() << "Poly ";
 		}
-		else if ( Element[idx].Type == PME_CURVE ) {
-			File.Write() << "Curve ";
-		}
-		else if ( Element[idx].Type == PME_BONE ) {
-			File.Write() << "Bone ";
-		}
+//		else if ( Element[idx].Type == PME_CURVE ) {
+//			File.Write() << "Curve ";
+//		}
+//		else if ( Element[idx].Type == PME_BONE ) {
+//			File.Write() << "Bone ";
+//		}
 		
 		// Append the center position //
 		File.Write() << Element[idx].Center.x << " ";
@@ -222,12 +222,12 @@ void cPolyMap::Save( const char* FileName ) const {
 		if ( Element[idx].Type == PME_SPHERE ) {
 			File.Write() << "Radius " << Element[idx].Data[0].f << endl;
 		}
-		else if ( Element[idx].Type == PME_BONE ) {
-			for ( size_t idx2 = 0; idx2 < Element[idx].Data.size(); idx2++ ) {
-				// TODO: Bone stuff
-				//Element[idx].Data[idx2].i
-			}
-		}
+//		else if ( Element[idx].Type == PME_BONE ) {
+//			for ( size_t idx2 = 0; idx2 < Element[idx].Data.size(); idx2++ ) {
+//				// TODO: Bone stuff
+//				//Element[idx].Data[idx2].i
+//			}
+//		}
 	}
 
 	// ----- Write Links ---------------------------------------------------------------- //

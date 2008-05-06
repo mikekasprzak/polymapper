@@ -12,6 +12,8 @@
 #include <AdvancedGeometry/PointVsPolygon2D.h>
 #include <AdvancedGeometry/PointVsEdgedPolygon2D.h>
 
+#include <AllegroDraw/MatrixDraw.h>
+
 using namespace std;
 
 BITMAP* Buffer;
@@ -79,12 +81,22 @@ int main( int argc, char* argv[] ) {
 	
 	size_t PoyCount = 5;
 	
+	Matrix3x3 Transform;
+	Transform(0,0) = 1;
+	Transform(1,1) = 1;
+	Transform(2,2) = 1;
+	
+//	Transform(2,0) = 400;
+//	Transform(2,1) = 300;
+	
 	
 	while( !key[KEY_ESC] ) {
 		clear_to_color( Buffer, makecol(35,0,0) );
 		
 		Vector2D Mouse(mouse_x, mouse_y);
 		circle( Buffer, mouse_x, mouse_y, 2, makecol( 255, 255, 255 ) );
+		
+		MatrixArrow2( Buffer, Transform, Vector2D(400,300), Mouse, makecol( 255, 255, 0 ) );
 		
 		// Circle Tests //
 		{
@@ -101,6 +113,7 @@ int main( int argc, char* argv[] ) {
 			// Nearest point on Circle //
 			Vector2D Point = NearestPointOnSphere2D( Mouse, DummySphere, DummySphereRadius );
 			circle( Buffer, (int)Point.x, (int)Point.y, 3, makecol( 0, 255, 0 ) );
+			
 			
 			// Nearest point on the edge of the circle //
 			Vector2D EdgePoint = NearestPointOnEdgeOfSphere2D( Mouse, DummySphere, DummySphereRadius );

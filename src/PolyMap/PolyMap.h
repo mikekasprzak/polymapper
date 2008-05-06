@@ -16,6 +16,7 @@ enum {
 	PME_SPHERE,
 	PME_RECT,
 	PME_POLY,
+//	PME_ORECT,
 //	PME_CURVE,
 //	PME_BONE,
 	

@@ -6,6 +6,77 @@
 #include <Math/Matrix.h>
 #include <Geometry/Rect.h>
 // - ------------------------------------------------------------------------------------------ - //
+void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	// Transform our point by the matrix //
+	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	// Draw our circle //
+	circle( Target, (int)Point.x, (int)Point.y, (int)Radius, Color );
+	
+	// TODO: use the matrix somehow to calculate the scale, and scale up/down the radius
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {
+	// Get our points //
+	Vector2D Point[2];
+	
+	// Transform them by the matrix //
+	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	// Draw our line //
+	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
+	// Get our points //
+	Vector2D Point[2];
+	
+	// Transform them by the matrix //
+	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	// Draw our line //
+	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
+	
+	// Calculate Arrowhead angle //
+	Vector2D HeadPoint = Point[0] - Point[1];
+	HeadPoint.Normalize();
+	HeadPoint *= HeadLength;
+	
+	// Draw the Arrowhead on P2 //
+	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
+	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
+	// Get our points //
+	Vector2D Point[2];
+	
+	// Transform them by the matrix //
+	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	// Draw our line //
+	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
+	
+	// Calculate Arrowhead angles //
+	Vector2D HeadPoint = Point[0] - Point[1];
+	HeadPoint.Normalize();
+	HeadPoint *= HeadLength;
+	
+	// Draw the Arrowheads //
+	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
+	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
+
+	line( Target, (int)((-HeadPoint.Rotate45() + Point[0]).x), (int)((-HeadPoint.Rotate45() + Point[0]).y), (int)(Point[0].x), (int)(Point[0].y), Color );
+	line( Target, (int)((-HeadPoint.RotateNegative45() + Point[0]).x), (int)((-HeadPoint.RotateNegative45() + Point[0]).y), (int)(Point[0].x), (int)(Point[0].y), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
 void MatrixRect( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, const int Color ) {
 	// Get our points //
 	Vector2D Point[4];
@@ -27,72 +98,230 @@ void MatrixRect( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, co
 	line( Target, (int)(Point[3].x), (int)(Point[3].y), (int)(Point[0].x), (int)(Point[0].y), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {
-	// Get our points //
-	Vector2D Point[2];
-	
-	// Transform them by the matrix //
-	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	
-	// Draw our line //
-	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
-}
-// - ------------------------------------------------------------------------------------------ - //
-void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadSize = 8 ) {
-	// Get our points //
-	Vector2D Point[2];
-	
-	// Transform them by the matrix //
-	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	
-	// Draw our line //
-	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
-	
-	// Calculate Arrowhead angle //
-	Vector2D HeadPoint = Point[0] - Point[1];
-	HeadPoint.Normalize();
-	HeadPoint *= HeadSize;
-	
-	// Draw the Arrowhead on P2 //
-	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
-	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
-}
-// - ------------------------------------------------------------------------------------------ - //
-void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadSize = 8 ) {
-	// Get our points //
-	Vector2D Point[2];
-	
-	// Transform them by the matrix //
-	Point[0] = P1.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	Point[1] = P2.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
-	
-	// Draw our line //
-	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
-	
-	// Calculate Arrowhead angles //
-	Vector2D HeadPoint = Point[0] - Point[1];
-	HeadPoint.Normalize();
-	HeadPoint *= HeadSize;
-	
-	// Draw the Arrowheads //
-	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
-	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 
-	line( Target, (int)((-HeadPoint.Rotate45() + Point[0]).x), (int)((-HeadPoint.Rotate45() + Point[0]).y), (int)(Point[0].x), (int)(Point[0].y), Color );
-	line( Target, (int)((-HeadPoint.RotateNegative45() + Point[0]).x), (int)((-HeadPoint.RotateNegative45() + Point[0]).y), (int)(Point[0].x), (int)(Point[0].y), Color );
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixClosedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
+	
+	// Transform the first point //
+	Vector2D StartPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	Vector2D LastPoint;
+	Vector2D NextPoint = StartPoint;
+	
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+	}
+
+	// Close the polygon //
+	line( Target, (int)NextPoint.x, (int)NextPoint.y, (int)StartPoint.x, (int)StartPoint.y, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
-	// Transform our point by the matrix //
-	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+void MatrixOpenPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
 	
-	// Draw our circle //
-	circle( Target, (int)Point.x, (int)Point.y, (int)Radius, Color );
+	// Transform the point //
+	Vector2D LastPoint;
+	Vector2D NextPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 	
-	// TODO: use the matrix somehow to calculate the scale, and scale up/down the radius
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+	}
 }
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
+	
+	// Transform the first point //
+	Vector2D StartPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	Vector2D LastPoint;
+	Vector2D NextPoint = StartPoint;
+	
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		// Draw the Line //
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+		
+		
+		// Take Point A to B //
+		Vector2D AB = NextPoint - LastPoint;
+		Real Length = AB.NormalizeRet();
+		
+		// Calculate Center //
+		Vector2D Center = LastPoint + (AB * (Length * Real::Half));
+	
+		// Calculate Normal's position //
+		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
+		
+		// Draw the Normal //
+		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+	}
+
+	// Draw the closing line //
+	line( Target, (int)NextPoint.x, (int)NextPoint.y, (int)StartPoint.x, (int)StartPoint.y, Color );
+
+	// Take Point A to B //
+	Vector2D AB = StartPoint - NextPoint;
+	Real Length = AB.NormalizeRet();
+	
+	// Calculate Center //
+	Vector2D Center = NextPoint + (AB * (Length * Real::Half));
+
+	// Calculate Normal's position //
+	Vector2D Normal = Center + (AB.Tangent() * NormalLength );
+	
+	// Draw the Normal //
+	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
+	
+	// Transform the first point //
+	Vector2D StartPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	Vector2D LastPoint;
+	Vector2D NextPoint = StartPoint;
+	
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		// Draw the Line //
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+		
+		
+		// Take Point A to B //
+		Vector2D AB = NextPoint - LastPoint;
+		Real Length = AB.NormalizeRet();
+		
+		// Calculate Center //
+		Vector2D Center = LastPoint + (AB * (Length * Real::Half));
+	
+		// Calculate Normal's position //
+		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
+		
+		// Draw the Normal //
+		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+	}
+
+	// Draw the closing line //
+	line( Target, (int)NextPoint.x, (int)NextPoint.y, (int)StartPoint.x, (int)StartPoint.y, Color );
+
+	// Take Point A to B //
+	Vector2D AB = StartPoint - NextPoint;
+	Real Length = AB.NormalizeRet();
+	
+	// Calculate Center //
+	Vector2D Center = NextPoint + (AB * (Length * Real::Half));
+
+	// Calculate Normal's position //
+	Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
+	
+	// Draw the Normal //
+	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixOpenPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
+	
+	// Transform the first point //
+	Vector2D StartPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	Vector2D LastPoint;
+	Vector2D NextPoint = StartPoint;
+	
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		// Draw the Line //
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+		
+		
+		// Take Point A to B //
+		Vector2D AB = NextPoint - LastPoint;
+		Real Length = AB.NormalizeRet();
+		
+		// Calculate Center //
+		Vector2D Center = LastPoint + (AB * (Length * Real::Half));
+	
+		// Calculate Normal's position //
+		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
+		
+		// Draw the Normal //
+		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+	}
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixOpenPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+	// Bail if less than 2 points //
+	if ( PolyCount < 2 )
+		return;
+	
+	// Transform the first point //
+	Vector2D StartPoint = Poly[0].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+	
+	Vector2D LastPoint;
+	Vector2D NextPoint = StartPoint;
+	
+	// For every point in the Polygon //
+	for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+		// Last becomes Next, and transform a new Next //
+		LastPoint = NextPoint;
+		NextPoint = Poly[idx+1].ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+		
+		// Draw the Line //
+		line( Target, (int)LastPoint.x, (int)LastPoint.y, (int)NextPoint.x, (int)NextPoint.y, Color );
+		
+		
+		// Take Point A to B //
+		Vector2D AB = NextPoint - LastPoint;
+		Real Length = AB.NormalizeRet();
+		
+		// Calculate Center //
+		Vector2D Center = LastPoint + (AB * (Length * Real::Half));
+	
+		// Calculate Normal's position //
+		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
+		
+		// Draw the Normal //
+		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
+	}
+}
+// - ------------------------------------------------------------------------------------------ - //
+
 // - ------------------------------------------------------------------------------------------ - //
 #endif // __AllegroDraw_MatrixDraw_H__ //
 // - ------------------------------------------------------------------------------------------ - //

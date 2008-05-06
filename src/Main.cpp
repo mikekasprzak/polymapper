@@ -208,16 +208,18 @@ int main( int argc, char* argv[] ) {
 				Color = makecol( 255, 255, 0 );
 			}
 			
-			// Draw the Rect //
-			for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
-				line( Buffer, (int)Poly[idx].x, (int)Poly[idx].y, (int)Poly[idx+1].x, (int)Poly[idx+1].y, 
-					(idx == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount )) ? makecol(255, 255, 255) : Color
-					);
-			}
-			if ( PolyCount-1 == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ) ) {
-				Color = makecol(255, 255, 255);
-			}
-			line( Buffer, (int)Poly[PolyCount-1].x, (int)Poly[PolyCount-1].y, (int)Poly[0].x, (int)Poly[0].y, Color );
+//			// Draw the Rect //
+//			for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
+//				line( Buffer, (int)Poly[idx].x, (int)Poly[idx].y, (int)Poly[idx+1].x, (int)Poly[idx+1].y, 
+//					(idx == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount )) ? makecol(255, 255, 255) : Color
+//					);
+//			}
+//			if ( PolyCount-1 == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ) ) {
+//				Color = makecol(255, 255, 255);
+//			}
+//			line( Buffer, (int)Poly[PolyCount-1].x, (int)Poly[PolyCount-1].y, (int)Poly[0].x, (int)Poly[0].y, Color );
+			
+			MatrixClosedPolygonWithNormals( Buffer, Transform, Poly, PolyCount, Color );
 			
 			// Nearest point on Polygon //
 			Vector2D Point = NearestPointOnPolygon2D( Mouse, Poly, PolyCount );

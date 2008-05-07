@@ -143,7 +143,8 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfPairRect2D( Mouse, PairP1, PairP2 );
-			circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 		
 		// ShapeRect Tests //
@@ -169,7 +170,8 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfShapeRect2D( Mouse, ShapeP1, ShapeShape );
-			circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 		
 		// RadiusRect Tests //
@@ -195,7 +197,8 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfRadiusRect2D( Mouse, RadiusCenter, RadiusRadius );
-			circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 
 		// Polygon Tests //
@@ -231,7 +234,8 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Polygon //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfPolygon2D( Mouse, Poly, PolyCount );
-			circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 
 		// Edged Polygon Tests //
@@ -267,7 +271,8 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Polygon //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
-			circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
+			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 
 		

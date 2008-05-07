@@ -10,10 +10,28 @@ void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos,
 	// Transform our point by the matrix //
 	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 	
-	// Draw our circle //
-	circle( Target, (int)Point.x, (int)Point.y, (int)Radius, Color );
+	// Transform our Radius by the Matrix //
+	Real TrRadius = Matrix(0,0) * Radius;
 	
-	// TODO: use the matrix somehow to calculate the scale, and scale up/down the radius
+	// Draw our circle //
+	circle( Target, (int)Point.x, (int)Point.y, (int)TrRadius, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+void RadiusBox( BITMAP* Target, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	rect( Target, (int)(Pos.x - Radius), (int)(Pos.y - Radius), (int)(Pos.x + Radius), (int)(Pos.y + Radius), Color );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	// Transform our point by the matrix //
+	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+
+	// Transform our Radius by the Matrix //
+	Real TrRadius = Matrix(0,0) * Radius;
+	
+	// Draw our box //
+	rect( Target, (int)(Point.x - TrRadius), (int)(Point.y - TrRadius), (int)(Point.x + TrRadius), (int)(Point.y + TrRadius), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

@@ -224,6 +224,14 @@ int main( int argc, char* argv[] ) {
 //			line( Buffer, (int)Poly[PolyCount-1].x, (int)Poly[PolyCount-1].y, (int)Poly[0].x, (int)Poly[0].y, Color );
 			
 			MatrixClosedPolygonWithNormals( Buffer, Transform, Poly, PolyCount, Color );
+			MatrixPolygonEdge( 
+				Buffer,
+				Transform,
+				NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ),
+				Poly,
+				PolyCount,
+				makecol(255, 255, 255 )
+				);
 			
 			// Nearest point on Polygon //
 			Vector2D Point = NearestPointOnPolygon2D( Mouse, Poly, PolyCount );
@@ -250,17 +258,33 @@ int main( int argc, char* argv[] ) {
 			}
 			
 			// Draw the Rect //
-			for ( size_t idx = 0; idx < PoyCount-1; idx++ ) {
-				if ( PoyOn[idx] )
-					line( Buffer, (int)Poy[idx].x, (int)Poy[idx].y, (int)Poy[idx+1].x, (int)Poy[idx+1].y, 
-						(idx == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount )) ? makecol(255, 255, 255) : Color
+//			for ( size_t idx = 0; idx < PoyCount-1; idx++ ) {
+//				if ( PoyOn[idx] )
+//					line( Buffer, (int)Poy[idx].x, (int)Poy[idx].y, (int)Poy[idx+1].x, (int)Poy[idx+1].y, 
+//						(idx == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount )) ? makecol(255, 255, 255) : Color
+//						);
+//			}
+//			if ( PoyCount-1 == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount ) ) {
+//				Color = makecol(255, 255, 255);
+//			}
+//			if ( PoyOn[PoyCount-1] )
+//				line( Buffer, (int)Poy[PoyCount-1].x, (int)Poy[PoyCount-1].y, (int)Poy[0].x, (int)Poy[0].y, Color );
+
+			MatrixEdgedPolygonWithNormals( Buffer, Transform, Poy, PoyOn, PoyCount, Color );
+			
+			int Edge = NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
+			if ( Edge != -1 ) {
+				if ( PoyOn[Edge] ) {
+					MatrixPolygonEdge( 
+						Buffer,
+						Transform,
+						Edge,
+						Poy,
+						PoyCount,
+						makecol( 255, 255, 255 )
 						);
+				}
 			}
-			if ( PoyCount-1 == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount ) ) {
-				Color = makecol(255, 255, 255);
-			}
-			if ( PoyOn[PoyCount-1] )
-				line( Buffer, (int)Poy[PoyCount-1].x, (int)Poy[PoyCount-1].y, (int)Poy[0].x, (int)Poy[0].y, Color );
 			
 			// Nearest point on Polygon //
 			Vector2D Point = NearestPointOnEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );

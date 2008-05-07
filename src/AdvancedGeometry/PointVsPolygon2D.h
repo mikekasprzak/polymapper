@@ -112,8 +112,8 @@ inline const size_t NearestCornerPointIndexOnEdgeOfPolygon2D( const Vector2D& Po
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestEdgeIndexOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	size_t Index;
+inline const int NearestEdgeIndexOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+	size_t Index = -1;
 	Vector2D Point;
 	Real DistanceSquared;
 	

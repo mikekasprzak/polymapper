@@ -144,7 +144,6 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfPairRect2D( Mouse, PairP1, PairP2 );
-			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
 			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 		
@@ -171,7 +170,6 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfShapeRect2D( Mouse, ShapeP1, ShapeShape );
-			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
 			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 		
@@ -198,7 +196,6 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Rect //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfRadiusRect2D( Mouse, RadiusCenter, RadiusRadius );
-			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
 			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 
@@ -212,17 +209,7 @@ int main( int argc, char* argv[] ) {
 				Color = makecol( 255, 255, 0 );
 			}
 			
-//			// Draw the Rect //
-//			for ( size_t idx = 0; idx < PolyCount-1; idx++ ) {
-//				line( Buffer, (int)Poly[idx].x, (int)Poly[idx].y, (int)Poly[idx+1].x, (int)Poly[idx+1].y, 
-//					(idx == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount )) ? makecol(255, 255, 255) : Color
-//					);
-//			}
-//			if ( PolyCount-1 == NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ) ) {
-//				Color = makecol(255, 255, 255);
-//			}
-//			line( Buffer, (int)Poly[PolyCount-1].x, (int)Poly[PolyCount-1].y, (int)Poly[0].x, (int)Poly[0].y, Color );
-			
+			// Draw the Polygon //
 			MatrixClosedPolygonWithNormals( Buffer, Transform, Poly, PolyCount, Color );
 			MatrixPolygonEdge( 
 				Buffer,
@@ -243,7 +230,6 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Polygon //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfPolygon2D( Mouse, Poly, PolyCount );
-			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
 			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 
@@ -257,19 +243,7 @@ int main( int argc, char* argv[] ) {
 				Color = makecol( 255, 255, 0 );
 			}
 			
-			// Draw the Rect //
-//			for ( size_t idx = 0; idx < PoyCount-1; idx++ ) {
-//				if ( PoyOn[idx] )
-//					line( Buffer, (int)Poy[idx].x, (int)Poy[idx].y, (int)Poy[idx+1].x, (int)Poy[idx+1].y, 
-//						(idx == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount )) ? makecol(255, 255, 255) : Color
-//						);
-//			}
-//			if ( PoyCount-1 == NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount ) ) {
-//				Color = makecol(255, 255, 255);
-//			}
-//			if ( PoyOn[PoyCount-1] )
-//				line( Buffer, (int)Poy[PoyCount-1].x, (int)Poy[PoyCount-1].y, (int)Poy[0].x, (int)Poy[0].y, Color );
-
+			// Draw the Polygon //
 			MatrixEdgedPolygonWithNormals( Buffer, Transform, Poy, PoyOn, PoyCount, Color );
 			
 			int Edge = NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
@@ -296,7 +270,6 @@ int main( int argc, char* argv[] ) {
 
 			// Nearest point on the edge of the Polygon //
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
-			//circle( Buffer, (int)CornerPoint.x, (int)CornerPoint.y, 7, makecol( 255, 255, 0 ) );
 			RadiusBox( Buffer, CornerPoint, 7, makecol( 255, 255, 0 ) );
 		}
 

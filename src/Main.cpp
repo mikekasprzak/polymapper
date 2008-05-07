@@ -130,7 +130,8 @@ int main( int argc, char* argv[] ) {
 			}
 			
 			// Draw the Rect //
-			rect( Buffer, (int)PairP1.x, (int)PairP1.y, (int)PairP2.x, (int)PairP2.y, Color );
+			//rect( Buffer, (int)PairP1.x, (int)PairP1.y, (int)PairP2.x, (int)PairP2.y, Color );
+			MatrixRectWithNormals( Buffer, Transform, Rect2D::Pair( PairP1, PairP2 ), Color );
 			
 			
 			// Nearest point on Rect //

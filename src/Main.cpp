@@ -94,7 +94,7 @@ int main( int argc, char* argv[] ) {
 		
 		// Circle Tests //
 		{
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the sphere //
 			if ( TestPointVsSphere2D( Mouse, DummySphere, DummySphereRadius ) ) {
@@ -116,7 +116,7 @@ int main( int argc, char* argv[] ) {
 		
 		// PairRect Tests //
 		{
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the Rect //
 			if ( TestPointVsPairRect2D( Mouse, PairP1, PairP2 ) ) {
@@ -143,7 +143,7 @@ int main( int argc, char* argv[] ) {
 		
 		// ShapeRect Tests //
 		{
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the Rect //
 			if ( TestPointVsShapeRect2D( Mouse, ShapeP1, ShapeShape ) ) {
@@ -169,7 +169,7 @@ int main( int argc, char* argv[] ) {
 		
 		// RadiusRect Tests //
 		{
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the Rect //
 			if ( TestPointVsRadiusRect2D( Mouse, RadiusCenter, RadiusRadius ) ) {
@@ -196,7 +196,7 @@ int main( int argc, char* argv[] ) {
 		// Polygon Tests //
 		{
 			// Draw the Polygon //
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the Polygon //
 			if ( TestPointVsPolygon2D( Mouse, Poly, PolyCount ) ) {
@@ -204,14 +204,12 @@ int main( int argc, char* argv[] ) {
 			}
 			
 			// Draw the Polygon //
-			MatrixClosedPolygonWithNormals( Buffer, Transform, Poly, PolyCount, Color );
-			MatrixPolygonEdge( 
-				Buffer,
-				Transform,
+			gfxDrawClosedPolygonWithNormals( Poly, PolyCount, Color );
+			gfxDrawPolygonEdge( 
 				NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ),
 				Poly,
 				PolyCount,
-				RGB(255, 255, 255 )
+				RGB_WHITE
 				);
 			
 			// Nearest point on Polygon //
@@ -230,7 +228,7 @@ int main( int argc, char* argv[] ) {
 		// Edged Polygon Tests //
 		{
 			// Draw the Polygon //
-			int Color = RGB( 255, 0, 0 );
+			ColorType Color = RGB( 255, 0, 0 );
 			
 			// If inside the Polygon //
 			if ( TestPointVsEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount ) ) {
@@ -238,19 +236,12 @@ int main( int argc, char* argv[] ) {
 			}
 			
 			// Draw the Polygon //
-			MatrixEdgedPolygonWithNormals( Buffer, Transform, Poy, PoyOn, PoyCount, Color );
+			gfxDrawEdgedPolygonWithNormals( Poy, PoyOn, PoyCount, Color );
 			
 			int Edge = NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
 			if ( Edge != -1 ) {
 				if ( PoyOn[Edge] ) {
-					MatrixPolygonEdge( 
-						Buffer,
-						Transform,
-						Edge,
-						Poy,
-						PoyCount,
-						RGB( 255, 255, 255 )
-						);
+					gfxDrawPolygonEdge( Edge, Poy, PoyCount, RGB_WHITE );
 				}
 			}
 			

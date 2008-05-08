@@ -41,5 +41,53 @@ inline void gfxDrawRectWithNormals( const Vector2D& P1, const Vector2D& P2, cons
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawClosedPolygon( const Vector2D* Poly, const size_t PolyCount, const ColorType Color ) {
+	MatrixClosedPolygon( Buffer, Matrix, Poly, PolyCount, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawOpenPolygon( const Vector2D* Poly, const size_t PolyCount, const ColorType Color ) {
+	MatrixOpenPolygon( Buffer, Matrix, Poly, PolyCount, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawClosedPolygonWithNormals( const Vector2D* Poly, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixClosedPolygonWithNormals( Buffer, Matrix, Poly, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawOpenPolygonWithNormals( const Vector2D* Poly, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixOpenPolygonWithNormals( Buffer, Matrix, Poly, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawClosedPolygonWithInvNormals( const Vector2D* Poly, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixClosedPolygonWithInvNormals( Buffer, Matrix, Poly, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawOpenPolygonWithInvNormals( const Vector2D* Poly, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixOpenPolygonWithInvNormals( Buffer, Matrix, Poly, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawPolygonEdge( const int Index, const Vector2D* Poly, const size_t PolyCount, const ColorType Color ) {
+	MatrixPolygonEdge( Buffer, Matrix, Index, Poly, PolyCount, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawEdgedPolygon( const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const ColorType Color ) {
+	MatrixEdgedPolygon( Buffer, Matrix, Poly, PolygonEnabled, PolyCount, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawEdgedPolygonWithNormals( const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixEdgedPolygonWithNormals( Buffer, Matrix, Poly, PolygonEnabled, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawEdgedPolygonWithInvNormals( const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const ColorType Color, const Real NormalLength = 8, const ColorType NormalColor = RGB_WHITE ) {
+	MatrixEdgedPolygonWithInvNormals( Buffer, Matrix, Poly, PolygonEnabled, PolyCount, Color, NormalLength, NormalColor );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
 #endif // __AllegroGraphics_GraphicsDraw_H__ //
 // - ------------------------------------------------------------------------------------------ - //

@@ -2,18 +2,21 @@
 #ifndef __AllegroGraphics_Graphics_H__
 #define __AllegroGraphics_Graphics_H__
 // - ------------------------------------------------------------------------------------------ - //
-#include "MatrixDraw.h"
+#include <Allegro.h>
 // - ------------------------------------------------------------------------------------------ - //
-//#include <Math/Vector.h>
-//#include <Math/Matrix.h>
-//#include <Geometry/Rect.h>
+#include <Math/Matrix.h>
 // - ------------------------------------------------------------------------------------------ - //
 extern int ScreenWidth;
 extern int ScreenHeight;
 
 extern BITMAP* Buffer;
 
-extern Matrix3x3 ViewMatrix;
+extern Matrix3x3 Matrix;
+// - ------------------------------------------------------------------------------------------ - //
+typedef int ColorType;
+
+#define RGB(_r, _g, _b) makecol(_r,_g,_b)
+#define RGBA(_r, _g, _b, _a) makecol(_r,_g,_b)
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false ) {
 	// Install Common Allegro Features //
@@ -35,7 +38,13 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 		set_gfx_mode( GFX_AUTODETECT_WINDOWED, ScreenWidth, ScreenHeight, 0, 0 );
 	
 	// Create our drawing buffer //
-	Buffer = create_bitmap( ScreenWidth, ScreenHeight );	
+	Buffer = create_bitmap( ScreenWidth, ScreenHeight );
+	
+	// Initalize Matrix //
+	Matrix(0,0) = 1;
+	Matrix(1,1) = 1;
+	Matrix(2,2) = 1;
+	
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxExit( ) {
@@ -48,9 +57,9 @@ inline void gfxExit( ) {
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline void gfxClearBuffer( ) {
+inline void gfxClearBuffer( const ColorType Color = RGB(0,0,0) ) {
 	// Clear the buffer to blackness //
-	clear_to_color( Buffer, makecol(0,0,0) );
+	clear_to_color( Buffer, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSwapBuffer( ) {

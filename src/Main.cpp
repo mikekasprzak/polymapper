@@ -75,14 +75,6 @@ int main( int argc, char* argv[] ) {
 	
 	size_t PoyCount = 5;
 	
-	Matrix3x3 Transform;
-	Transform(0,0) = 1;
-	Transform(1,1) = 1;
-	Transform(2,2) = 1;
-	
-//	Transform(2,0) = 400;
-//	Transform(2,1) = 300;
-	
 	
 	while( !key[KEY_ESC] ) {
 		gfxClearBuffer( RGB(70,0,0) );

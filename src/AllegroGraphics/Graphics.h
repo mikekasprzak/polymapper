@@ -58,6 +58,8 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	Matrix(1,1) = 1;
 	Matrix(2,2) = 1;
 	
+//	Matrix(0,2) = ScreenWidth>>1;
+//	Matrix(1,2) = ScreenHeight>>1;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxExit( ) {

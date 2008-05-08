@@ -12,7 +12,7 @@
 #include <AdvancedGeometry/PointVsPolygon2D.h>
 #include <AdvancedGeometry/PointVsEdgedPolygon2D.h>
 
-#include <AllegroDraw/MatrixDraw.h>
+#include <AllegroDraw/Graphics.h>
 
 using namespace std;
 

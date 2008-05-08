@@ -12,6 +12,8 @@ extern int ScreenWidth;
 extern int ScreenHeight;
 
 extern BITMAP* Buffer;
+
+extern Matrix3x3 ViewMatrix;
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false ) {
 	// Install Common Allegro Features //

@@ -1,8 +1,10 @@
 // - ------------------------------------------------------------------------------------------ - //
-#ifndef __AllegroDraw_MatrixDraw_H__
-#define __AllegroDraw_MatrixDraw_H__
+#ifndef __AllegroGraphics_MatrixDraw_H__
+#define __AllegroGraphics_MatrixDraw_H__
 // - ------------------------------------------------------------------------------------------ - //
-#include <Math/Vector/Vector2D.h>
+#include <Allegro.h>
+// - ------------------------------------------------------------------------------------------ - //
+#include <Math/Vector.h>
 #include <Math/Matrix.h>
 #include <Geometry/Rect.h>
 // - ------------------------------------------------------------------------------------------ - //
@@ -631,5 +633,5 @@ void MatrixEdgedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, 
 
 
 // - ------------------------------------------------------------------------------------------ - //
-#endif // __AllegroDraw_MatrixDraw_H__ //
+#endif // __AllegroGraphics_MatrixDraw_H__ //
 // - ------------------------------------------------------------------------------------------ - //

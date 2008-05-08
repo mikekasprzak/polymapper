@@ -12,11 +12,11 @@
 #include <AdvancedGeometry/PointVsPolygon2D.h>
 #include <AdvancedGeometry/PointVsEdgedPolygon2D.h>
 
-#include <AllegroDraw/Graphics.h>
+#include <AllegroGraphics/Graphics.h>
 
 using namespace std;
 
-BITMAP* Buffer;
+//BITMAP* Buffer;
 
 int main( int argc, char* argv[] ) {
 //	if ( argc == 1 ) {

@@ -8,7 +8,7 @@
 #include <Math/Matrix.h>
 #include <Geometry/Rect.h>
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+inline void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
 	// Transform our point by the matrix //
 	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 	
@@ -21,11 +21,11 @@ void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos,
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void RadiusBox( BITMAP* Target, const Vector2D& Pos, const Real& Radius, const int Color ) {
+inline void RadiusBox( BITMAP* Target, const Vector2D& Pos, const Real& Radius, const int Color ) {
 	rect( Target, (int)(Pos.x - Radius), (int)(Pos.y - Radius), (int)(Pos.x + Radius), (int)(Pos.y + Radius), Color );	
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+inline void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
 	// Transform our point by the matrix //
 	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 
@@ -38,7 +38,7 @@ void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {
+inline void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {
 	// Get our points //
 	Vector2D Point[2];
 	
@@ -50,7 +50,7 @@ void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, co
 	line( Target, (int)(Point[0].x), (int)(Point[0].y), (int)(Point[1].x), (int)(Point[1].y), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
+inline void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
 	// Get our points //
 	Vector2D Point[2];
 	
@@ -71,7 +71,7 @@ void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, c
 	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
+inline void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color, const Real HeadLength = 8 ) {
 	// Get our points //
 	Vector2D Point[2];
 	
@@ -97,7 +97,7 @@ void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, 
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixRect( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, const int Color ) {
+inline void MatrixRect( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, const int Color ) {
 	// Get our points //
 	Vector2D Point[4];
 	Point[0] = Rect.P1();
@@ -119,7 +119,7 @@ void MatrixRect( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, co
 	line( Target, (int)(Point[3].x), (int)(Point[3].y), (int)(Point[0].x), (int)(Point[0].y), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixRectWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255)  ) {
+inline void MatrixRectWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Rect2D& Rect, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255)  ) {
 	// Get our points //
 	Vector2D Point[4];
 	Point[0] = Rect.P1();
@@ -207,7 +207,7 @@ void MatrixRectWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Rect2
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixRectEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index, const Rect2D& Rect, const int Color ) {
+inline void MatrixRectEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index, const Rect2D& Rect, const int Color ) {
 	// Get our points //
 	Vector2D Point[4];
 	Point[0] = Rect.P1();
@@ -235,7 +235,7 @@ void MatrixRectEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index, c
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixClosedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
+inline void MatrixClosedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -259,7 +259,7 @@ void MatrixClosedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2
 	line( Target, (int)NextPoint.x, (int)NextPoint.y, (int)StartPoint.x, (int)StartPoint.y, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixOpenPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
+inline void MatrixOpenPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -280,7 +280,7 @@ void MatrixOpenPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D*
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixPolygonEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
+inline void MatrixPolygonEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index, const Vector2D* Poly, const size_t PolyCount, const int Color ) {
 	// Immediately bail if index is less than zero //
 	if ( Index < 0 )
 		return;
@@ -309,7 +309,7 @@ void MatrixPolygonEdge( BITMAP* Target, const Matrix3x3& Matrix, const int Index
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -361,7 +361,7 @@ void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, co
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -413,7 +413,7 @@ void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix,
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixOpenPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixOpenPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -449,7 +449,7 @@ void MatrixOpenPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, cons
 	}
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixOpenPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixOpenPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -488,7 +488,7 @@ void MatrixOpenPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, c
 
 
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixEdgedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color ) {
+inline void MatrixEdgedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -514,7 +514,7 @@ void MatrixEdgedPolygon( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D
 		line( Target, (int)NextPoint.x, (int)NextPoint.y, (int)StartPoint.x, (int)StartPoint.y, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixEdgedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixEdgedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;
@@ -572,7 +572,7 @@ void MatrixEdgedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matrix, con
 	}
 }
 // - ------------------------------------------------------------------------------------------ - //
-void MatrixEdgedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
+inline void MatrixEdgedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D* Poly, const bool* PolygonEnabled, const size_t PolyCount, const int Color, const Real NormalLength = 8, const int NormalColor = makecol(255,255,255) ) {
 	// Bail if less than 2 points //
 	if ( PolyCount < 2 )
 		return;

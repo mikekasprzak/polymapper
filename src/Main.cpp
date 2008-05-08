@@ -29,15 +29,8 @@ int main( int argc, char* argv[] ) {
 //	cPolyMap Map( argv[1] );
 //	Map.Save( "Wheater.txt" );
 
+	gfxInit( 800, 600 );
 
-	allegro_init();
-	install_keyboard();
-	install_mouse();
-	
-	set_color_depth( 16 );
-	set_gfx_mode( GFX_AUTODETECT_WINDOWED, 800, 600, 0, 0 );
-	Buffer = create_bitmap( 800, 600 );
-	
 	// Sphere //
 	Vector2D DummySphere( 100, 100 );
 	Real DummySphereRadius = 32;
@@ -91,7 +84,7 @@ int main( int argc, char* argv[] ) {
 	
 	
 	while( !key[KEY_ESC] ) {
-		clear_to_color( Buffer, makecol(35,0,0) );
+		gfxClearBuffer();
 		
 		Vector2D Mouse(mouse_x, mouse_y);
 		circle( Buffer, mouse_x, mouse_y, 2, makecol( 255, 255, 255 ) );
@@ -274,13 +267,10 @@ int main( int argc, char* argv[] ) {
 		}
 
 		
-		vsync();
-		rest(0);
-		
-		blit( Buffer, screen, 0, 0, 0, 0, Buffer->w, Buffer->h );
+		gfxSwapBuffer();
 	}
 	
-	allegro_exit();
+	gfxExit();
 	return 0;
 }
 END_OF_MAIN();

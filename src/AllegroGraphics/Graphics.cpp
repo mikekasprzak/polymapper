@@ -7,6 +7,10 @@ int ScreenHeight;
 BITMAP* Buffer;
 
 Matrix3x3 Matrix;
+
+ColorType CurrentColor;
+ColorType CurrentNormalColor;
+Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
 //bool
 // - ------------------------------------------------------------------------------------------ - //

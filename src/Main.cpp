@@ -79,10 +79,10 @@ int main( int argc, char* argv[] ) {
 	while( !key[KEY_ESC] ) {
 		gfxClearBuffer( RGB(70,0,0) );
 		
+		// Note the cursor position //
 		Vector2D Mouse(mouse_x, mouse_y);
-		gfxDrawCircle( Mouse, 2, RGB( 255, 255, 255 ) );
 		
-		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB( 255, 255, 0 ) );
+		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_YELLOW, Real(30) );
 		
 		// Circle Tests //
 		{
@@ -250,7 +250,10 @@ int main( int argc, char* argv[] ) {
 			gfxDrawRadiusBox( CornerPoint, 7, RGB( 255, 255, 0 ) );
 		}
 
-		
+		// Draw the cursor (so it's on top of everything //
+		gfxDrawCircle( Mouse, 2, RGB_WHITE );
+
+		// Swap display buffer to screen //
 		gfxSwapBuffer();
 	}
 	

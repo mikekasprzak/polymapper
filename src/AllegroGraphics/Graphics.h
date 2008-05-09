@@ -6,13 +6,6 @@
 // - ------------------------------------------------------------------------------------------ - //
 #include <Math/Matrix.h>
 // - ------------------------------------------------------------------------------------------ - //
-extern int ScreenWidth;
-extern int ScreenHeight;
-
-extern BITMAP* Buffer;
-
-extern Matrix3x3 Matrix;
-// - ------------------------------------------------------------------------------------------ - //
 typedef int ColorType;
 
 #define RGB(_r, _g, _b) makecol(_r,_g,_b)
@@ -30,6 +23,17 @@ typedef int ColorType;
 #define RGB_CYAN    makecol(0,255,255)
 
 #define RGB_ORANGE  makecol(255,127,0)
+// - ------------------------------------------------------------------------------------------ - //
+extern int ScreenWidth;
+extern int ScreenHeight;
+
+extern BITMAP* Buffer;
+
+extern Matrix3x3 Matrix;
+
+extern ColorType CurrentColor;
+extern Real CurrentNormalLength;
+extern ColorType CurrentNormalColor;
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false ) {
 	// Install Common Allegro Features //
@@ -53,13 +57,20 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	// Create our drawing buffer //
 	Buffer = create_bitmap( ScreenWidth, ScreenHeight );
 	
+	// Set the initial current color defaulting to white //
+	// (Note, makecol only works after set_gfx_mode) //
+	CurrentColor = RGB_WHITE;
+	CurrentNormalColor = RGB_WHITE;
+	
+	CurrentNormalLength = 8;
+	
 	// Initalize Matrix //
 	Matrix(0,0) = 1;
 	Matrix(1,1) = 1;
 	Matrix(2,2) = 1;
 	
-//	Matrix(0,2) = ScreenWidth>>1;
-//	Matrix(1,2) = ScreenHeight>>1;
+//	Matrix(0,2) = ScreenWidth >> 1;
+//	Matrix(1,2) = ScreenHeight >> 1;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxExit( ) {
@@ -85,6 +96,29 @@ inline void gfxSwapBuffer( ) {
 }
 // - ------------------------------------------------------------------------------------------ - //
 
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetColor( const ColorType Color ) {
+	CurrentColor = Color;
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetColor( const int r, const int g, const int b, const int a = 255 ) {
+	CurrentColor = RGBA(r,g,b,a);
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetNormalColor( const ColorType Color ) {
+	CurrentNormalColor = Color;
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetNormalColor( const int r, const int g, const int b, const int a = 255 ) {
+	CurrentNormalColor = RGBA(r,g,b,a);
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetNormalLength( const Real NormalLength ) {
+	CurrentNormalLength = NormalLength;
+}
+// - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 #endif // __AllegroGraphics_Graphics_H__ //

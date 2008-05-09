@@ -82,7 +82,7 @@ int main( int argc, char* argv[] ) {
 		// Note the cursor position //
 		Vector2D Mouse(mouse_x, mouse_y);
 		
-		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_YELLOW, Real(30) );
+		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB(0,127,255), Real(30) );
 		
 		// Circle Tests //
 		{

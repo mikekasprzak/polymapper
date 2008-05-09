@@ -8,21 +8,27 @@
 // - ------------------------------------------------------------------------------------------ - //
 typedef int ColorType;
 
-#define RGB(_r, _g, _b) makecol(_r,_g,_b)
-#define RGBA(_r, _g, _b, _a) makecol(_r,_g,_b)
+#define RGB(_r,_g,_b)		makecol(_r,_g,_b)
+#define RGBA(_r,_g,_b,_a)	makecol(_r,_g,_b)
 
-#define RGB_BLACK   makecol(0,0,0)
-#define RGB_WHITE   makecol(255,255,255)
+#define RGB_BLACK	makecol(0,0,0)
+#define RGB_GREY	makecol(127,127,127)
+#define RGB_WHITE	makecol(255,255,255)
 
-#define RGB_RED     makecol(255,0,0)
-#define RGB_GREEN   makecol(0,255,0)
-#define RGB_BLUE    makecol(0,0,255)
+#define RGB_RED		makecol(255,0,0)
+#define RGB_GREEN	makecol(0,255,0)
+#define RGB_BLUE	makecol(0,0,255)
 
-#define RGB_MAGENTA makecol(255,0,255)
-#define RGB_YELLOW  makecol(255,255,0)
-#define RGB_CYAN    makecol(0,255,255)
+#define RGB_MAGENTA	makecol(255,0,255)
+#define RGB_YELLOW	makecol(255,255,0)
+#define RGB_CYAN	makecol(0,255,255)
 
-#define RGB_ORANGE  makecol(255,127,0)
+#define RGB_ORANGE	makecol(255,127,0)
+#define RGB_PINK	makecol(255,0,127)
+#define RGB_PURPLE	makecol(127,0,255)
+#define RGB_PUKE	makecol(127,255,0)
+#define RGB_MINT	makecol(0,255,127)
+#define RGB_SKY		makecol(0,127,255)
 // - ------------------------------------------------------------------------------------------ - //
 extern int ScreenWidth;
 extern int ScreenHeight;
@@ -32,8 +38,8 @@ extern BITMAP* Buffer;
 extern Matrix3x3 Matrix;
 
 extern ColorType CurrentColor;
-extern Real CurrentNormalLength;
 extern ColorType CurrentNormalColor;
+extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false ) {
 	// Install Common Allegro Features //

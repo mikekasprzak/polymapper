@@ -13,6 +13,7 @@ inline void MatrixCircle( BITMAP* Target, const Matrix3x3& Matrix, const Vector2
 	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 	
 	// Transform our Radius by the Matrix //
+	// TODO: This isn't perfect.  Make it perfect. //
 	Real TrRadius = Matrix(0,0) * Radius;
 	
 	// Draw our circle //
@@ -30,6 +31,7 @@ inline void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vect
 	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
 
 	// Transform our Radius by the Matrix //
+	// TODO: This isn't perfect.  Make it perfect. //
 	Real TrRadius = Matrix(0,0) * Radius;
 	
 	// Draw our box //
@@ -67,6 +69,7 @@ inline void MatrixArrow( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D
 	HeadPoint *= HeadLength;
 	
 	// Draw the Arrowhead on P2 //
+	// TODO: Scale the arrowheads //
 	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 }
@@ -88,6 +91,7 @@ inline void MatrixArrow2( BITMAP* Target, const Matrix3x3& Matrix, const Vector2
 	HeadPoint *= HeadLength;
 	
 	// Draw the Arrowheads //
+	// TODO: Scale the arrowheads //
 	line( Target, (int)((HeadPoint.Rotate45() + Point[1]).x), (int)((HeadPoint.Rotate45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 	line( Target, (int)((HeadPoint.RotateNegative45() + Point[1]).x), (int)((HeadPoint.RotateNegative45() + Point[1]).y), (int)(Point[1].x), (int)(Point[1].y), Color );
 
@@ -142,6 +146,7 @@ inline void MatrixRectWithNormals( BITMAP* Target, const Matrix3x3& Matrix, cons
 	
 	// TODO: Can be optimized to use same general transformation information as the center //
 	//   plus "one transformation" method theorized above. //
+	// TODO: Scale the normals by Matrix //
 	
 	{
 		// Take Point A to B //
@@ -222,6 +227,7 @@ inline void MatrixRectNormals( BITMAP* Target, const Matrix3x3& Matrix, const Re
 	
 	// TODO: Can be optimized to use same general transformation information as the center //
 	//   plus "one transformation" method theorized above. //
+	// TODO: Scale the normals by Matrix //
 	
 	{
 		// Take Point A to B //
@@ -330,6 +336,7 @@ inline void MatrixRectEdgeNormal( BITMAP* Target, const Matrix3x3& Matrix, const
 	
 	// TODO: Can be optimized to use same general transformation information as the center //
 	//   plus "one transformation" method theorized above. //
+	// TODO: Scale the normals by Matrix //
 	if ( Index == 0 )
 	{
 		// Take Point A to B //
@@ -500,6 +507,7 @@ inline void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Mat
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 
@@ -517,6 +525,7 @@ inline void MatrixClosedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Mat
 	Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 	
 	// Draw the Normal //
+	// TODO: Scale the normals by Matrix //
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -552,6 +561,7 @@ inline void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& 
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 
@@ -569,6 +579,7 @@ inline void MatrixClosedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& 
 	Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 	
 	// Draw the Normal //
+	// TODO: Scale the normals by Matrix //
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -604,6 +615,7 @@ inline void MatrixOpenPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matri
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -640,6 +652,7 @@ inline void MatrixOpenPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& Ma
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -674,6 +687,7 @@ inline void MatrixClosedPolygonNormals( BITMAP* Target, const Matrix3x3& Matrix,
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 
@@ -688,6 +702,7 @@ inline void MatrixClosedPolygonNormals( BITMAP* Target, const Matrix3x3& Matrix,
 	Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 	
 	// Draw the Normal //
+	// TODO: Scale the normals by Matrix //
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -719,6 +734,7 @@ inline void MatrixClosedPolygonInvNormals( BITMAP* Target, const Matrix3x3& Matr
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 
@@ -733,6 +749,7 @@ inline void MatrixClosedPolygonInvNormals( BITMAP* Target, const Matrix3x3& Matr
 	Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 	
 	// Draw the Normal //
+	// TODO: Scale the normals by Matrix //
 	line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -764,6 +781,7 @@ inline void MatrixOpenPolygonNormals( BITMAP* Target, const Matrix3x3& Matrix, c
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -796,6 +814,7 @@ inline void MatrixOpenPolygonInvNormals( BITMAP* Target, const Matrix3x3& Matrix
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -863,6 +882,7 @@ inline void MatrixEdgedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matr
 			Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 			
 			// Draw the Normal //
+			// TODO: Scale the normals by Matrix //
 			line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 		}
 	}
@@ -883,6 +903,7 @@ inline void MatrixEdgedPolygonWithNormals( BITMAP* Target, const Matrix3x3& Matr
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -921,6 +942,7 @@ inline void MatrixEdgedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& M
 			Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 			
 			// Draw the Normal //
+			// TODO: Scale the normals by Matrix //
 			line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 		}
 	}
@@ -941,6 +963,7 @@ inline void MatrixEdgedPolygonWithInvNormals( BITMAP* Target, const Matrix3x3& M
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -977,6 +1000,7 @@ inline void MatrixEdgedPolygonNormals( BITMAP* Target, const Matrix3x3& Matrix, 
 			Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 			
 			// Draw the Normal //
+			// TODO: Scale the normals by Matrix //
 			line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 		}
 	}
@@ -994,6 +1018,7 @@ inline void MatrixEdgedPolygonNormals( BITMAP* Target, const Matrix3x3& Matrix, 
 		Vector2D Normal = Center + (AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }
@@ -1028,6 +1053,7 @@ inline void MatrixEdgedPolygonInvNormals( BITMAP* Target, const Matrix3x3& Matri
 			Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 			
 			// Draw the Normal //
+			// TODO: Scale the normals by Matrix //
 			line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 		}
 	}
@@ -1045,6 +1071,7 @@ inline void MatrixEdgedPolygonInvNormals( BITMAP* Target, const Matrix3x3& Matri
 		Vector2D Normal = Center + (-AB.Tangent() * NormalLength );
 		
 		// Draw the Normal //
+		// TODO: Scale the normals by Matrix //
 		line( Target, (int)Center.x, (int)Center.y, (int)Normal.x, (int)Normal.y, NormalColor );
 	}
 }

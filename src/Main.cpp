@@ -250,16 +250,27 @@ int main( int argc, char* argv[] ) {
 		
 		// Testing the matrix stack //
 		gfxPushMatrix();
-			//gfxTranslate( 100, 100 );
-			gfxScale(2);
+		{
+//			gfxTranslate( 100, 100 );
+//			gfxScale(2);
+			
+//			static Real Orc;
+//			Orc += 0.001;
+//			gfxRotate( Orc );
+
+//			gfxRotate( 0.01 );
+			
 			gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_PUKE, Real(30) );
+		}
 		gfxPopMatrix();
 	
 		// Draw the cursor (so it's on top of everything //
 		gfxDrawCircle( Mouse, 2, RGB_WHITE );
 
+		while( key[KEY_SPACE] ) {}
+
 		// Swap display buffer to screen //
-		gfxSwapBuffer();
+		gfxSwapBuffer();		
 	}
 	
 	gfxExit();

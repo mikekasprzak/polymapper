@@ -82,8 +82,6 @@ int main( int argc, char* argv[] ) {
 		// Note the cursor position //
 		Vector2D Mouse(mouse_x, mouse_y);
 		
-		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB(0,127,255), Real(30) );
-		
 		// Circle Tests //
 		{
 			ColorType Color = RGB( 255, 0, 0 );
@@ -249,6 +247,8 @@ int main( int argc, char* argv[] ) {
 			Vector2D CornerPoint = NearestCornerPointOnEdgeOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
 			gfxDrawRadiusBox( CornerPoint, 7, RGB( 255, 255, 0 ) );
 		}
+		
+		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_PUKE, Real(30) );
 
 		// Draw the cursor (so it's on top of everything //
 		gfxDrawCircle( Mouse, 2, RGB_WHITE );

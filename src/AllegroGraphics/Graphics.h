@@ -3,6 +3,7 @@
 #define __AllegroGraphics_Graphics_H__
 // - ------------------------------------------------------------------------------------------ - //
 #include <Allegro.h>
+#include <vector>
 // - ------------------------------------------------------------------------------------------ - //
 #include <Math/Matrix.h>
 // - ------------------------------------------------------------------------------------------ - //
@@ -36,6 +37,8 @@ extern int ScreenHeight;
 extern BITMAP* Buffer;
 
 extern Matrix3x3 Matrix;
+
+extern std::vector<Matrix3x3>* MatrixStack;
 
 extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
@@ -77,9 +80,15 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	
 //	Matrix(0,2) = ScreenWidth >> 1;
 //	Matrix(1,2) = ScreenHeight >> 1;
+
+	// Initalize Matrix Stack //
+	MatrixStack = new std::vector<Matrix3x3>();
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxExit( ) {
+	// Kill the matrix stack //
+	delete MatrixStack;
+	
 	// Kill our drawing buffer //
 	destroy_bitmap( Buffer );
 
@@ -123,6 +132,31 @@ inline void gfxSetNormalColor( const int r, const int g, const int b, const int 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetNormalLength( const Real NormalLength ) {
 	CurrentNormalLength = NormalLength;
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxPushMatrix() {
+	MatrixStack->push_back( Matrix );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxPeepMatrix() {
+	Matrix = MatrixStack->back();	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxPopMatrix() {
+	// TODO: Log an error if too many pops //
+	
+	gfxPeepMatrix();
+	MatrixStack->pop_back();	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxTranslate( const Real _x, const Real _y, const Real _z = Real::Zero ) {
+	// TODO: Multiply Matrix //
+	
+	// Temp, for now just add to the matrix //
+	Matrix(0,2) += _x;
+	Matrix(1,2) += _y;
 }
 // - ------------------------------------------------------------------------------------------ - //
 

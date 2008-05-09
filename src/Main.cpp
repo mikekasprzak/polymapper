@@ -199,7 +199,7 @@ int main( int argc, char* argv[] ) {
 				NearestEdgeIndexOfPolygon2D( Mouse, Poly, PolyCount ),
 				Poly,
 				PolyCount,
-				RGB_WHITE
+				RGB_CYAN
 				);
 			
 			// Nearest point on Polygon //
@@ -231,7 +231,7 @@ int main( int argc, char* argv[] ) {
 			int Edge = NearestEdgeIndexOfEdgedPolygon2D( Mouse, Poy, PoyOn, PoyCount );
 			if ( Edge != -1 ) {
 				if ( PoyOn[Edge] ) {
-					gfxDrawPolygonEdge( Edge, Poy, PoyCount, RGB_WHITE );
+					gfxDrawPolygonEdge( Edge, Poy, PoyCount, RGB_CYAN );
 				}
 			}
 			
@@ -248,8 +248,12 @@ int main( int argc, char* argv[] ) {
 			gfxDrawRadiusBox( CornerPoint, 7, RGB( 255, 255, 0 ) );
 		}
 		
-		gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_PUKE, Real(30) );
-
+		// Testing the matrix stack //
+		gfxPushMatrix();
+			gfxTranslate( 100, 100 );
+			gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_PUKE, Real(30) );
+		gfxPopMatrix();
+	
 		// Draw the cursor (so it's on top of everything //
 		gfxDrawCircle( Mouse, 2, RGB_WHITE );
 

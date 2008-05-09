@@ -151,12 +151,18 @@ inline void gfxPopMatrix() {
 	MatrixStack->pop_back();	
 }
 // - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxTranslate( const Vector2D& v ) {
+	Matrix *= Matrix3x3::Translating( v );
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxTranslate( const Real _x, const Real _y, const Real _z = Real::Zero ) {
-	// TODO: Multiply Matrix //
-	
-	// Temp, for now just add to the matrix //
-	Matrix(0,2) += _x;
-	Matrix(1,2) += _y;
+	Matrix *= Matrix3x3::Translating( Vector2D( _x, _y ) );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxScale( const Real Scalar ) {
+	Matrix *= Matrix3x3::Scaling( Scalar );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

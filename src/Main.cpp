@@ -250,7 +250,8 @@ int main( int argc, char* argv[] ) {
 		
 		// Testing the matrix stack //
 		gfxPushMatrix();
-			gfxTranslate( 100, 100 );
+			//gfxTranslate( 100, 100 );
+			gfxScale(2);
 			gfxDrawArrow2( Vector2D(400,300), Mouse, RGB_PUKE, Real(30) );
 		gfxPopMatrix();
 	

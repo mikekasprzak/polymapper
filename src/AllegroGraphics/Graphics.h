@@ -47,6 +47,9 @@ extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
+extern volatile bool CloseButtonPressed;
+void gfxCloseButtonHandler();
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false, const int _ScreenScalar = 1 ) {
 	// Install Common Allegro Features //
 	allegro_init();
@@ -58,6 +61,13 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	ScreenHeight = _Height;
 	
 	ScreenScalar = _ScreenScalar;
+	
+	// Set our close button function //
+	CloseButtonPressed = false;
+	
+	LOCK_FUNCTION(gfxCloseButtonHandler);
+	set_close_button_callback(gfxCloseButtonHandler);
+
 	
 	// Set the color depth to something efficent //
 	set_color_depth( 16 );
@@ -101,6 +111,18 @@ inline void gfxExit( ) {
 	allegro_exit();
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline bool gfxShutdown() {
+	if ( key[KEY_ESC] )
+		return true;
+	
+	if ( key[KEY_F10] )
+		return true;
+	
+	if ( CloseButtonPressed )
+		return true;
+}
+// - ------------------------------------------------------------------------------------------ - //
+
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxClearBuffer( const ColorType Color = RGB_BLACK ) {

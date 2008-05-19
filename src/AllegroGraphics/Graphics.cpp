@@ -6,6 +6,8 @@ int ScreenHeight;
 
 int ScreenScalar;
 
+
+
 BITMAP* Buffer;
 
 Matrix3x3 Matrix;
@@ -16,5 +18,11 @@ ColorType CurrentColor;
 ColorType CurrentNormalColor;
 Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
-//bool
+volatile bool CloseButtonPressed;
+// - ------------------------------------------------------------------------------------------ - //
+void gfxCloseButtonHandler()
+{
+	CloseButtonPressed = true;
+}
+END_OF_FUNCTION(gfxCloseButtonHandler)
 // - ------------------------------------------------------------------------------------------ - //

@@ -4,6 +4,8 @@
 int ScreenWidth;
 int ScreenHeight;
 
+int ScreenScalar;
+
 BITMAP* Buffer;
 
 Matrix3x3 Matrix;

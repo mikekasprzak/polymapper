@@ -34,6 +34,9 @@ typedef int ColorType;
 extern int ScreenWidth;
 extern int ScreenHeight;
 
+extern int ScreenScalar;
+
+
 extern BITMAP* Buffer;
 
 extern Matrix3x3 Matrix;
@@ -44,7 +47,7 @@ extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
-inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false ) {
+inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false, const int _ScreenScalar = 1 ) {
 	// Install Common Allegro Features //
 	allegro_init();
 	install_keyboard();
@@ -54,14 +57,16 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	ScreenWidth = _Width;
 	ScreenHeight = _Height;
 	
+	ScreenScalar = _ScreenScalar;
+	
 	// Set the color depth to something efficent //
 	set_color_depth( 16 );
 	
 	// Windowed or fullscreen //
 	if ( FullScreen )
-		set_gfx_mode( GFX_AUTODETECT_FULLSCREEN, ScreenWidth, ScreenHeight, 0, 0 );
+		set_gfx_mode( GFX_AUTODETECT_FULLSCREEN, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar, 0, 0 );
 	else
-		set_gfx_mode( GFX_AUTODETECT_WINDOWED, ScreenWidth, ScreenHeight, 0, 0 );
+		set_gfx_mode( GFX_AUTODETECT_WINDOWED, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar, 0, 0 );
 	
 	// Create our drawing buffer //
 	Buffer = create_bitmap( ScreenWidth, ScreenHeight );
@@ -107,7 +112,10 @@ inline void gfxSwapBuffer( ) {
 	// Sync and copy the buffer to the screen //
 	vsync();
 	rest(0);
-	blit( Buffer, screen, 0, 0, 0, 0, Buffer->w, Buffer->h );
+	if ( ScreenScalar == 1 )
+		blit( Buffer, screen, 0, 0, 0, 0, Buffer->w, Buffer->h );
+	else
+		stretch_blit( Buffer, screen, 0, 0, Buffer->w, Buffer->h, 0, 0, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

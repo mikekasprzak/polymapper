@@ -35,7 +35,28 @@ inline void MatrixRadiusBox( BITMAP* Target, const Matrix3x3& Matrix, const Vect
 	Real TrRadius = Matrix(0,0) * Radius;
 	
 	// Draw our box //
-	rect( Target, (int)(Point.x - TrRadius), (int)(Point.y - TrRadius), (int)(Point.x + TrRadius), (int)(Point.y + TrRadius), Color );
+	RadiusBox( Target, Point, TrRadius, Color );
+	//rect( Target, (int)(Point.x - TrRadius), (int)(Point.y - TrRadius), (int)(Point.x + TrRadius), (int)(Point.y + TrRadius), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void Cross( BITMAP* Target, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	rect( Target, (int)(Pos.x - Radius), (int)(Pos.y), (int)(Pos.x + Radius), (int)(Pos.y), Color );	
+	rect( Target, (int)(Pos.x), (int)(Pos.y - Radius), (int)(Pos.x), (int)(Pos.y + Radius), Color );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void MatrixCross( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	// Transform our point by the matrix //
+	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+
+	// Transform our Radius by the Matrix //
+	// TODO: This isn't perfect.  Make it perfect. //
+	Real TrRadius = Matrix(0,0) * Radius;
+	
+	// Draw our cross //
+	Cross( Target, Point, TrRadius, Color );
+	//rect( Target, (int)(Point.x - TrRadius), (int)(Point.y - TrRadius), (int)(Point.x + TrRadius), (int)(Point.y + TrRadius), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

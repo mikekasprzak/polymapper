@@ -164,6 +164,11 @@ void cPolyMap::Load( const char* FileName ) {
 		}
 
 	} while ( File.NextLine() );
+	
+	// Update all centers //
+	for ( size_t idx = 0; idx < Element.size(); idx++ ) {
+		Element[idx].UpdateCenter();
+	}
 }
 // - ------------------------------------------------------------------------------------------ - //
 void cPolyMap::Save( const char* FileName ) const {

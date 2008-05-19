@@ -68,6 +68,40 @@ public:
 		Info( 0 )
 	{
 	}
+	
+public:
+	void UpdateCenter() {
+		switch (Type) {
+			case PME_RECT: {
+				if ( Vertex.size() ) {
+					Center = Vertex[0] + ((Vertex[1] - Vertex[0]) * Real::Half);
+				}
+				break;
+			}
+			case PME_POLY: {
+				if ( Vertex.size() ) {
+					// TODO: Make this an algorithm somewhere //
+					Vector2D P1 = Vertex[0];
+					Vector2D P2 = Vertex[0];
+					
+					for ( size_t idx = 1; idx < Vertex.size(); idx++ ) {
+						if ( Vertex[idx].x < P1.x )
+							P1.x = Vertex[idx].x;
+						if ( Vertex[idx].y < P1.y )
+							P1.y = Vertex[idx].y;
+							
+						if ( Vertex[idx].x > P2.x )
+							P2.x = Vertex[idx].x;
+						if ( Vertex[idx].y > P2.y )
+							P2.y = Vertex[idx].y;
+					}
+					
+					Center = P1 + ((P2 - P1) * Real::Half);
+				}
+				break;
+			}
+		};
+	}
 };
 // - ------------------------------------------------------------------------------------------ - //
 class cPolyMapLink {

@@ -8,7 +8,7 @@
 #include <map>
 #include <string>
 
-#include <Math/Vector/Vector3D.h>
+#include <Math/Vector/Vector2D.h>
 // - ------------------------------------------------------------------------------------------ - //
 // Enumerations for Element Type //
 enum {
@@ -29,10 +29,10 @@ public:
 	size_t Type;
 	
 	// Center position //
-	Vector3D Center;
+	Vector2D Center;
 	
 	// All vertices found in the element (Node - unused) //
-	std::vector< Vector3D > Vertex;
+	std::vector< Vector2D > Vertex;
 	
 	// A type for the arbitrary data section, Data //	
 	union PMEData {

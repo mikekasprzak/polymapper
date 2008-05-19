@@ -13,7 +13,7 @@ void cPolyMap::Load( const char* FileName ) {
 	cWhitespaceTokenizer File( FileName );
 	
 	// Tracked offset variable, if we choose to use the displacement command "Offset" //
-	Vector3D Offset;
+	Vector2D Offset;
 	
 	// An enumeration for tracking the current creation mode, for keyword reuse //
 	enum {
@@ -32,7 +32,7 @@ void cPolyMap::Load( const char* FileName ) {
 
 			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
 		else if ( File.IsStringToken( "Sphere" ) ) {
 			CreateMode = ElementMode;
@@ -41,7 +41,7 @@ void cPolyMap::Load( const char* FileName ) {
 
 			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
 		else if ( File.IsStringToken( "Rect" ) ) {
 			CreateMode = ElementMode;
@@ -50,7 +50,7 @@ void cPolyMap::Load( const char* FileName ) {
 
 			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
 		else if ( File.IsStringToken( "Poly" ) ) {
 			CreateMode = ElementMode;
@@ -59,7 +59,7 @@ void cPolyMap::Load( const char* FileName ) {
 
 			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
 //		else if ( File.IsStringToken( "Curve" ) ) {
 //			CreateMode = ElementMode;
@@ -68,7 +68,7 @@ void cPolyMap::Load( const char* FileName ) {
 //
 //			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 //			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+////			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 //		}
 //		else if ( File.IsStringToken( "Bone" ) ) {
 //			CreateMode = ElementMode;
@@ -77,7 +77,7 @@ void cPolyMap::Load( const char* FileName ) {
 //
 //			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 //			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+////			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 //		}
 		
 		else if ( File.IsStringToken( "Link" ) ) {
@@ -103,14 +103,14 @@ void cPolyMap::Load( const char* FileName ) {
 			
 			Offset.x = File.StepFloatToken();
 			Offset.y = File.StepFloatToken();
-			Offset.z = File.StepFloatToken();
+//			Offset.z = File.StepFloatToken();
 		}
 		else if ( File.IsStringToken( "Center" ) ) {
 			File.NextToken();
 			
 			Element.back().Center.x = File.StepFloatToken() + Offset.x;
 			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
 		}
 		else if ( File.IsStringToken( "Type" ) ) {
 			File.NextToken();
@@ -149,9 +149,10 @@ void cPolyMap::Load( const char* FileName ) {
 			
 			float vx = File.StepFloatToken() + Offset.x;
 			float vy = File.StepFloatToken() + Offset.y;
-			float vz = File.StepFloatToken() + Offset.z;
+//			float vz = File.StepFloatToken() + Offset.z;
 			
-			Element.back().Vertex.push_back( Vector3D( vx, vy, vz ) );
+			Element.back().Vertex.push_back( Vector2D( vx, vy ) );
+//			Element.back().Vertex.push_back( Vector3D( vx, vy, vz ) );
 		}
 		else if ( File.IsStringToken( "Radius" ) ) {
 			File.NextToken();
@@ -197,8 +198,9 @@ void cPolyMap::Save( const char* FileName ) const {
 		
 		// Append the center position //
 		File.Write() << Element[idx].Center.x << " ";
-		File.Write() << Element[idx].Center.y << " ";
-		File.Write() << Element[idx].Center.z << endl;
+		File.Write() << Element[idx].Center.y << endl;
+//		File.Write() << Element[idx].Center.y << " ";
+//		File.Write() << Element[idx].Center.z << endl;
 
 		// If Id is not zero, write it //
 		if ( Element[idx].Id != 0 ) {
@@ -214,8 +216,9 @@ void cPolyMap::Save( const char* FileName ) const {
 		for ( size_t idx2 = 0; idx2 < Element[idx].Vertex.size(); idx2++ ) {
 			File.Write() << "Vertex ";
 			File.Write() << Element[idx].Vertex[idx2].x << " ";
-			File.Write() << Element[idx].Vertex[idx2].y << " ";
-			File.Write() << Element[idx].Vertex[idx2].z << endl;
+			File.Write() << Element[idx].Vertex[idx2].y << endl;
+//			File.Write() << Element[idx].Vertex[idx2].y << " ";
+//			File.Write() << Element[idx].Vertex[idx2].z << endl;
 		}
 		
 		// Write Data //

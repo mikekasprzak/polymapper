@@ -35,8 +35,7 @@ extern int ScreenWidth;
 extern int ScreenHeight;
 
 extern int ScreenScalar;
-
-
+// - ------------------------------------------------------------------------------------------ - //
 extern BITMAP* Buffer;
 
 extern Matrix3x3 Matrix;
@@ -47,8 +46,39 @@ extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
+extern Vector2D CameraPos;
+extern Real CameraScale;
+// - ------------------------------------------------------------------------------------------ - //
 extern volatile bool CloseButtonPressed;
 void gfxCloseButtonHandler();
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetMatrixToCamera( ) {
+	Matrix = Matrix3x3::Zero;
+	Matrix(0,0) = CameraScale;
+	Matrix(1,1) = CameraScale;
+	Matrix(2,2) = 1;
+	
+	Matrix(0,2) = CameraPos.x;
+	Matrix(1,2) = CameraPos.y;
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetCameraPos( const Vector2D& v ) {
+	CameraPos = v;	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
+	CameraPos = Vector2D( _x, _y );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetCameraScale( const Real _CameraScale ) {
+	CameraScale = _CameraScale;	
+}
+// - ------------------------------------------------------------------------------------------ - //
+
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false, const int _ScreenScalar = 1 ) {
 	// Install Common Allegro Features //
@@ -88,13 +118,12 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	
 	CurrentNormalLength = 8;
 	
-	// Initalize Matrix //
-	Matrix(0,0) = 1;
-	Matrix(1,1) = 1;
-	Matrix(2,2) = 1;
+	// Set the camera //
+	CameraPos = Vector2D( ScreenWidth >> 1, ScreenHeight >> 1 );
+	CameraScale = Real::One;
 	
-//	Matrix(0,2) = ScreenWidth >> 1;
-//	Matrix(1,2) = ScreenHeight >> 1;
+	// Initalize Matrix //
+	gfxSetMatrixToCamera();
 
 	// Initalize Matrix Stack //
 	MatrixStack = new std::vector<Matrix3x3>();
@@ -215,6 +244,7 @@ inline void gfxRotate( const Real& Angle ) {
 	Matrix *= Matrix3x3::Rotating( Angle );
 }
 // - ------------------------------------------------------------------------------------------ - //
+
 
 // - ------------------------------------------------------------------------------------------ - //
 #endif // __AllegroGraphics_Graphics_H__ //

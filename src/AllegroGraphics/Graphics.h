@@ -54,7 +54,7 @@ void gfxCloseButtonHandler();
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline void gfxSetMatrixToCamera( ) {
+inline void gfxSetCameraMatrix( ) {
 	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
 	Matrix *= Matrix3x3::Translating( CameraPos );
 	Matrix *= Matrix3x3::Translating( 
@@ -62,6 +62,12 @@ inline void gfxSetMatrixToCamera( ) {
 		);
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetScreenMatrix( ) {
+	// This is a (0,0) matrix because Allegro co-ordinates are relative (0,0) //
+	// NOTE: Mouse would have to be internally changed to -HalfWidth,-HalfHeight to correct this //
+	Matrix = Matrix3x3::Translating( Vector2D( 0, 0 ) );
+	//Matrix = Matrix3x3::Translating( Vector2D( ScreenWidth >> 1, ScreenHeight >> 1 ) );
+}// - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Vector2D& v ) {
@@ -121,7 +127,8 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	CameraScale = Real::One;
 	
 	// Initalize Matrix //
-	gfxSetMatrixToCamera();
+	//gfxSetCameraMatrix();
+	gfxSetScreenMatrix();
 
 	// Initalize Matrix Stack //
 	MatrixStack = new std::vector<Matrix3x3>();

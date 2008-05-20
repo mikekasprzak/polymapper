@@ -55,13 +55,11 @@ void gfxCloseButtonHandler();
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetMatrixToCamera( ) {
-	Matrix = Matrix3x3::Zero;
-	Matrix(0,0) = CameraScale;
-	Matrix(1,1) = CameraScale;
-	Matrix(2,2) = 1;
-	
-	Matrix(0,2) = CameraPos.x;
-	Matrix(1,2) = CameraPos.y;
+	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
+	Matrix *= Matrix3x3::Translating( CameraPos );
+	Matrix *= Matrix3x3::Translating( 
+		Vector2D( Real(ScreenWidth >> 1) * CameraScale, Real(ScreenHeight >> 1) * CameraScale )
+		);
 }
 // - ------------------------------------------------------------------------------------------ - //
 
@@ -119,7 +117,7 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	CurrentNormalLength = 8;
 	
 	// Set the camera //
-	CameraPos = Vector2D( ScreenWidth >> 1, ScreenHeight >> 1 );
+	CameraPos = Vector2D( 0, 0 );
 	CameraScale = Real::One;
 	
 	// Initalize Matrix //

@@ -58,34 +58,49 @@ public:
 	Real Scale;
 
 	Vector2D ViewShape;
-	Vector2D HalfViewShape;
+	Vector2D ViewHalfShape;
 	
 	// TODO: Something to do with clipping //
+public:
+	cCamera( const Vector2D& _Pos = Vector2D::Zero, const Real& _Scale = Real::One ) :
+		Pos( _Pos ),
+		Scale( _Scale ),
+		ViewShape( Screen::Shape * Scale ),
+		ViewHalfShape( ViewShape * Real::Half )
+	{
+	}
 	
 public:
-	inline const Matrix3x3 GetMatrix() {
+	inline const Matrix3x3 GetMatrix() const {
 		Matrix3x3 Matrix = Matrix3x3::Scaling( Real::One / Scale );
 		Matrix *= Matrix3x3::Translating( Pos );
 		Matrix *= Matrix3x3::Translating( Screen::HalfShape * Scale );
+		return Matrix;
 	}
 };
 // - ------------------------------------------------------------------------------------------ - //
-extern Vector2D ViewShape;
-extern Vector2D HalfViewShape;
+extern cCamera Camera;
+extern cCamera* CurrentCamera;
+// - ------------------------------------------------------------------------------------------ - //
+//extern Vector2D ViewShape;
+//extern Vector2D HalfViewShape;
 // - ------------------------------------------------------------------------------------------ - //
 extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
-extern Vector2D CameraPos;
-extern Real CameraScale;
+//extern Vector2D CameraPos;
+//extern Real CameraScale;
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline void gfxSetCameraMatrix( ) {
-	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
-	Matrix *= Matrix3x3::Translating( CameraPos );
-	Matrix *= Matrix3x3::Translating( Screen::HalfShape * CameraScale );
+//inline void gfxSetCameraMatrix( ) {
+//	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
+//	Matrix *= Matrix3x3::Translating( CameraPos );
+//	Matrix *= Matrix3x3::Translating( Screen::HalfShape * CameraScale );
+//}
+inline void gfxSetCameraMatrix( const cCamera& _Camera = *CurrentCamera ) {
+	Matrix = _Camera.GetMatrix();
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetScreenMatrix( ) {
@@ -103,26 +118,26 @@ inline void gfxSetScreenAspectMatrix( ) {
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Vector2D& v ) {
-	CameraPos = v;
+	CurrentCamera->Pos = v;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D& gfxGetCameraPos() {
-	return CameraPos;
+	return CurrentCamera->Pos;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
-	CameraPos = Vector2D( _x, _y );	
+	CurrentCamera->Pos = Vector2D( _x, _y );	
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Real& gfxGetCameraScale() {
-	return CameraScale;
+	return CurrentCamera->Scale;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraScale( const Real _CameraScale ) {
-	CameraScale = _CameraScale;	
+	CurrentCamera->Scale = _CameraScale;	
 	
-	ViewShape = Screen::Shape * CameraScale;
-	HalfViewShape = ViewShape * Real::Half;
+	CurrentCamera->ViewShape = Screen::Shape * CurrentCamera->Scale;
+	CurrentCamera->ViewHalfShape = CurrentCamera->ViewShape * Real::Half;
 }
 // - ------------------------------------------------------------------------------------------ - //
 
@@ -167,10 +182,13 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	CurrentNormalLength = 8;
 	
 	// Set the camera //
-	CameraPos = Vector2D( 0, 0 );
-	CameraScale = Real::One;
-	ViewShape = Screen::Shape * CameraScale;
-	HalfViewShape = ViewShape * Real::Half;
+//	CameraPos = Vector2D( 0, 0 );
+//	CameraScale = Real::One;
+//	ViewShape = Screen::Shape * CameraScale;
+//	HalfViewShape = ViewShape * Real::Half;
+		
+	Camera = cCamera();
+	CurrentCamera = &Camera;
 	
 	// Initalize Matrix //
 	gfxSetScreenMatrix();

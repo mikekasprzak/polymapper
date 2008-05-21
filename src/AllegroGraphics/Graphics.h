@@ -6,6 +6,7 @@
 #include <vector>
 // - ------------------------------------------------------------------------------------------ - //
 #include <Math/Matrix.h>
+#include <Geometry/Rect.h>
 // - ------------------------------------------------------------------------------------------ - //
 typedef int ColorType;
 
@@ -174,6 +175,29 @@ inline void gfxSetCameraScale( const Real _CameraScale ) {
 	
 	CurrentCamera->ViewShape = Screen::Shape * CurrentCamera->Scale;
 	CurrentCamera->ViewHalfShape = CurrentCamera->ViewShape * Real::Half;
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxAddCameraScale( const Real _CameraScale ) {
+	gfxSetCameraScale( gfxGetCameraScale() + _CameraScale );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxConstrainCamera( const Vector2D& P1, const Vector2D& P2 ) {
+	// Create a rectangle, contracting it's shape by the current size of the zoomed view //
+	Rect2D InnerViewRect = Rect2D::Pair(
+		P1 + CurrentCamera->ViewHalfShape,
+		P2 - CurrentCamera->ViewHalfShape
+		);
+	
+	// Restrict Camera to Zone //
+	CurrentCamera->Pos = InnerViewRect.ClosestPoint( CurrentCamera->Pos );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxConstrainCameraScale( const Real Min, const Real Max ) {
+	if ( gfxGetCameraScale() < Min )
+		gfxSetCameraScale( Min );
+
+	if ( gfxGetCameraScale() > Max )
+		gfxSetCameraScale( Max );	
 }
 // - ------------------------------------------------------------------------------------------ - //
 

@@ -52,6 +52,41 @@ namespace Screen {
 	void CloseButtonHandler();
 };
 // - ------------------------------------------------------------------------------------------ - //
+class cMouse {
+public:
+	Vector2D Pos;
+	Vector2D Old;
+	
+	int Wheel;
+	int WheelOld;
+	
+public:
+	cMouse() :
+		Wheel(mouse_z),
+		WheelOld(mouse_z)
+	{
+	}
+	
+	inline void Update() {
+		Old = Pos;
+		Pos = Vector2D(mouse_x, mouse_y) / (Screen::Scalar);
+		Pos -= Screen::HalfShape;
+			
+		WheelOld = Wheel;
+		Wheel = mouse_z;
+	}
+	
+	inline const Vector2D Diff() const {
+		return Old - Pos;
+	}
+	
+	inline const int WheelDiff() const {
+		return WheelOld - Wheel;
+	}
+};
+// - ------------------------------------------------------------------------------------------ - //
+extern cMouse Mouse;
+// - ------------------------------------------------------------------------------------------ - //
 class cCamera {
 public:
 	Vector2D Pos;
@@ -59,6 +94,8 @@ public:
 
 	Vector2D ViewShape;
 	Vector2D ViewHalfShape;
+	
+	Vector2D Mouse;
 	
 	// TODO: Something to do with clipping //
 public:
@@ -71,12 +108,18 @@ public:
 	}
 	
 public:
+	inline void Update() {
+		Mouse.x = (::Mouse.Pos.x * ViewShape.x) / Screen::Shape.x;
+		Mouse.y = (::Mouse.Pos.y * ViewShape.y) / Screen::Shape.y;
+		Mouse -= Pos;
+	}
+
 	inline const Matrix3x3 GetMatrix() const {
 		Matrix3x3 Matrix = Matrix3x3::Scaling( Real::One / Scale );
 		Matrix *= Matrix3x3::Translating( Pos );
 		Matrix *= Matrix3x3::Translating( Screen::HalfShape * Scale );
 		return Matrix;
-	}
+	}	
 };
 // - ------------------------------------------------------------------------------------------ - //
 extern cCamera Camera;
@@ -94,11 +137,6 @@ extern Real CurrentNormalLength;
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-//inline void gfxSetCameraMatrix( ) {
-//	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
-//	Matrix *= Matrix3x3::Translating( CameraPos );
-//	Matrix *= Matrix3x3::Translating( Screen::HalfShape * CameraScale );
-//}
 inline void gfxSetCameraMatrix( const cCamera& _Camera = *CurrentCamera ) {
 	Matrix = _Camera.GetMatrix();
 }
@@ -186,7 +224,9 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 //	CameraScale = Real::One;
 //	ViewShape = Screen::Shape * CameraScale;
 //	HalfViewShape = ViewShape * Real::Half;
-		
+	
+	Mouse = cMouse();
+	
 	Camera = cCamera();
 	CurrentCamera = &Camera;
 	

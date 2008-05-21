@@ -158,12 +158,20 @@ inline void gfxSetCameraPos( const Vector2D& v ) {
 	CurrentCamera->Pos = v;
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxAddCameraPos( const Vector2D& v ) {
+	CurrentCamera->Pos += v;
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D& gfxGetCameraPos() {
 	return CurrentCamera->Pos;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
 	CurrentCamera->Pos = Vector2D( _x, _y );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxAddCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
+	CurrentCamera->Pos += Vector2D( _x, _y );	
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Real& gfxGetCameraScale() {

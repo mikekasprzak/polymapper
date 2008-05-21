@@ -125,15 +125,9 @@ public:
 extern cCamera Camera;
 extern cCamera* CurrentCamera;
 // - ------------------------------------------------------------------------------------------ - //
-//extern Vector2D ViewShape;
-//extern Vector2D HalfViewShape;
-// - ------------------------------------------------------------------------------------------ - //
 extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
-// - ------------------------------------------------------------------------------------------ - //
-//extern Vector2D CameraPos;
-//extern Real CameraScale;
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
@@ -180,7 +174,7 @@ inline void gfxSetCameraScale( const Real _CameraScale ) {
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline void gfxInit( const int _Width, const int _Height, const bool FullScreen = false, const int _ScreenScalar = 1 ) {
+inline void gfxInit( const int _Width, const int _Height, const bool _FullScreen = false, const int _ScreenScalar = 1 ) {
 	// Install Common Allegro Features //
 	allegro_init();
 	install_keyboard();
@@ -204,7 +198,7 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	set_color_depth( 16 );
 	
 	// Windowed or fullscreen //
-	if ( FullScreen )
+	if ( _FullScreen )
 		set_gfx_mode( GFX_AUTODETECT_FULLSCREEN, Screen::Width * Screen::Scalar, Screen::Height * Screen::Scalar, 0, 0 );
 	else
 		set_gfx_mode( GFX_AUTODETECT_WINDOWED, Screen::Width * Screen::Scalar, Screen::Height * Screen::Scalar, 0, 0 );
@@ -219,14 +213,10 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	
 	CurrentNormalLength = 8;
 	
-	// Set the camera //
-//	CameraPos = Vector2D( 0, 0 );
-//	CameraScale = Real::One;
-//	ViewShape = Screen::Shape * CameraScale;
-//	HalfViewShape = ViewShape * Real::Half;
-	
+	// Make sure we have a freshly initialized mouse //
 	Mouse = cMouse();
 	
+	// Set the camera //
 	Camera = cCamera();
 	CurrentCamera = &Camera;
 	

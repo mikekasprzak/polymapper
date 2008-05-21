@@ -45,9 +45,9 @@ namespace Screen {
 	extern Vector2D Shape;
 	extern Vector2D HalfShape;
 
-	extern ColorType Color;
-	extern ColorType NormalColor;
-	extern Real NormalLength;
+//	extern ColorType Color;
+//	extern ColorType NormalColor;
+//	extern Real NormalLength;
 	
 	extern volatile bool CloseButtonPressed;
 	void CloseButtonHandler();

@@ -166,6 +166,10 @@ inline const Vector2D& gfxGetCameraPos() {
 	return CurrentCamera->Pos;
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline const Vector2D gfxGetCameraCenter() {
+	return Vector2D::Zero - gfxGetCameraPos();
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
 	CurrentCamera->Pos = Vector2D( _x, _y );	
 }

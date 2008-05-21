@@ -31,17 +31,48 @@ typedef int ColorType;
 #define RGB_MINT	makecol(0,255,127)
 #define RGB_SKY		makecol(0,127,255)
 // - ------------------------------------------------------------------------------------------ - //
-extern int ScreenWidth;
-extern int ScreenHeight;
-
-extern int ScreenScalar;
-// - ------------------------------------------------------------------------------------------ - //
 extern BITMAP* Buffer;
 
 extern Matrix3x3 Matrix;
-
 extern std::vector<Matrix3x3>* MatrixStack;
+// - ------------------------------------------------------------------------------------------ - //
+namespace Screen {
+	extern int Width;
+	extern int Height;
+	extern int Scalar;
+	
+	extern Vector2D Shape;
+	extern Vector2D HalfShape;
 
+	extern ColorType Color;
+	extern ColorType NormalColor;
+	extern Real NormalLength;
+	
+	extern volatile bool CloseButtonPressed;
+	void CloseButtonHandler();
+};
+// - ------------------------------------------------------------------------------------------ - //
+class cCamera {
+public:
+	Vector2D Pos;
+	Real Scale;
+
+	Vector2D ViewShape;
+	Vector2D HalfViewShape;
+	
+	// TODO: Something to do with clipping //
+	
+public:
+	inline const Matrix3x3 GetMatrix() {
+		Matrix3x3 Matrix = Matrix3x3::Scaling( Real::One / Scale );
+		Matrix *= Matrix3x3::Translating( Pos );
+		Matrix *= Matrix3x3::Translating( Screen::HalfShape * Scale );
+	}
+};
+// - ------------------------------------------------------------------------------------------ - //
+extern Vector2D ViewShape;
+extern Vector2D HalfViewShape;
+// - ------------------------------------------------------------------------------------------ - //
 extern ColorType CurrentColor;
 extern ColorType CurrentNormalColor;
 extern Real CurrentNormalLength;
@@ -49,37 +80,49 @@ extern Real CurrentNormalLength;
 extern Vector2D CameraPos;
 extern Real CameraScale;
 // - ------------------------------------------------------------------------------------------ - //
-extern volatile bool CloseButtonPressed;
-void gfxCloseButtonHandler();
-// - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraMatrix( ) {
 	Matrix = Matrix3x3::Scaling( 1.0 / CameraScale );
 	Matrix *= Matrix3x3::Translating( CameraPos );
-	Matrix *= Matrix3x3::Translating( 
-		Vector2D( Real(ScreenWidth >> 1) * CameraScale, Real(ScreenHeight >> 1) * CameraScale )
-		);
+	Matrix *= Matrix3x3::Translating( Screen::HalfShape * CameraScale );
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetScreenMatrix( ) {
-	// This is a (0,0) matrix because Allegro co-ordinates are relative (0,0) //
-	// NOTE: Mouse would have to be internally changed to -HalfWidth,-HalfHeight to correct this //
-	Matrix = Matrix3x3::Translating( Vector2D( 0, 0 ) );
-	//Matrix = Matrix3x3::Translating( Vector2D( ScreenWidth >> 1, ScreenHeight >> 1 ) );
-}// - ------------------------------------------------------------------------------------------ - //
+	Matrix = Matrix3x3::Translating( Screen::HalfShape );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetScreenAspectMatrix( ) {
+	// This is a function for setting an aspect ratio constrained Matrix. //
+	//   All screen co-ordinates fall in to at least a -1 to +1 range. //
+	// TODO: Make it do what the above suggests.  //
+	//   Perhaps horizontal is always -1 to 1, and vertical is some aspect ratio refined one. //
+	Matrix = Matrix3x3::Translating( Screen::HalfShape );
+}
+// - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Vector2D& v ) {
-	CameraPos = v;	
+	CameraPos = v;
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline const Vector2D& gfxGetCameraPos() {
+	return CameraPos;
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Real _x, const Real _y, const Real _z = Real::Zero ) {
 	CameraPos = Vector2D( _x, _y );	
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline const Real& gfxGetCameraScale() {
+	return CameraScale;
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraScale( const Real _CameraScale ) {
 	CameraScale = _CameraScale;	
+	
+	ViewShape = Screen::Shape * CameraScale;
+	HalfViewShape = ViewShape * Real::Half;
 }
 // - ------------------------------------------------------------------------------------------ - //
 
@@ -91,29 +134,30 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	install_mouse();
 	
 	// Store the requested screen dimensions //
-	ScreenWidth = _Width;
-	ScreenHeight = _Height;
+	Screen::Width = _Width;
+	Screen::Height = _Height;
 	
-	ScreenScalar = _ScreenScalar;
-	
-	// Set our close button function //
-	CloseButtonPressed = false;
-	
-	LOCK_FUNCTION(gfxCloseButtonHandler);
-	set_close_button_callback(gfxCloseButtonHandler);
+	Screen::Scalar = _ScreenScalar;
 
+	Screen::Shape = Vector2D( Screen::Width, Screen::Height );
+	Screen::HalfShape = Screen::Shape * Real::Half;
+
+	// Set our close button function //
+	Screen::CloseButtonPressed = false;
+	LOCK_FUNCTION( Screen::CloseButtonHandler );
+	set_close_button_callback( Screen::CloseButtonHandler );
 	
 	// Set the color depth to something efficent //
 	set_color_depth( 16 );
 	
 	// Windowed or fullscreen //
 	if ( FullScreen )
-		set_gfx_mode( GFX_AUTODETECT_FULLSCREEN, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar, 0, 0 );
+		set_gfx_mode( GFX_AUTODETECT_FULLSCREEN, Screen::Width * Screen::Scalar, Screen::Height * Screen::Scalar, 0, 0 );
 	else
-		set_gfx_mode( GFX_AUTODETECT_WINDOWED, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar, 0, 0 );
+		set_gfx_mode( GFX_AUTODETECT_WINDOWED, Screen::Width * Screen::Scalar, Screen::Height * Screen::Scalar, 0, 0 );
 	
 	// Create our drawing buffer //
-	Buffer = create_bitmap( ScreenWidth, ScreenHeight );
+	Buffer = create_bitmap( Screen::Width, Screen::Height );
 	
 	// Set the initial current color defaulting to white //
 	// (Note, makecol only works after set_gfx_mode) //
@@ -125,9 +169,10 @@ inline void gfxInit( const int _Width, const int _Height, const bool FullScreen 
 	// Set the camera //
 	CameraPos = Vector2D( 0, 0 );
 	CameraScale = Real::One;
+	ViewShape = Screen::Shape * CameraScale;
+	HalfViewShape = ViewShape * Real::Half;
 	
 	// Initalize Matrix //
-	//gfxSetCameraMatrix();
 	gfxSetScreenMatrix();
 
 	// Initalize Matrix Stack //
@@ -152,7 +197,7 @@ inline bool gfxShutdown() {
 	if ( key[KEY_F10] )
 		return true;
 	
-	if ( CloseButtonPressed )
+	if ( Screen::CloseButtonPressed )
 		return true;
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -165,13 +210,15 @@ inline void gfxClearBuffer( const ColorType Color = RGB_BLACK ) {
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxSwapBuffer( ) {
-	// Sync and copy the buffer to the screen //
-	vsync();
+	// Sync // 
 	rest(0);
-	if ( ScreenScalar == 1 )
+	vsync();
+	
+	// Copy the buffer to the screen //
+	if ( Screen::Scalar == 1 )
 		blit( Buffer, screen, 0, 0, 0, 0, Buffer->w, Buffer->h );
 	else
-		stretch_blit( Buffer, screen, 0, 0, Buffer->w, Buffer->h, 0, 0, ScreenWidth * ScreenScalar, ScreenHeight * ScreenScalar );
+		stretch_blit( Buffer, screen, 0, 0, Buffer->w, Buffer->h, 0, 0, Screen::Width * Screen::Scalar, Screen::Height * Screen::Scalar );
 }
 // - ------------------------------------------------------------------------------------------ - //
 
@@ -214,7 +261,6 @@ inline void gfxPeepMatrix() {
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxPopMatrix() {
 	// TODO: Log an error if too many pops //
-	
 	gfxPeepMatrix();
 	MatrixStack->pop_back();	
 }

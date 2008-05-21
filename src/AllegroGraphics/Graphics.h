@@ -149,6 +149,10 @@ inline void gfxSetScreenAspectMatrix( ) {
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetCamera( cCamera& _Camera = Camera ) {
+	CurrentCamera = &_Camera;
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxSetCameraPos( const Vector2D& v ) {
 	CurrentCamera->Pos = v;
 }

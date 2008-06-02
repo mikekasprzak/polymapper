@@ -115,7 +115,7 @@ void cPolyMap::Load( const char* FileName ) {
 		else if ( File.IsStringToken( "Type" ) ) {
 			File.NextToken();
 			
-			// Depending on the creation mode, set the info of the appropriate part //
+			// Depending on the creation mode, set the Type of the appropriate part //
 			if ( CreateMode == ElementMode )
 				Element.back().Type = File.StepIntegerToken();
 			else if ( CreateMode == LinkMode )
@@ -124,17 +124,21 @@ void cPolyMap::Load( const char* FileName ) {
 		else if ( File.IsStringToken( "Id" ) ) {
 			File.NextToken();
 			
-			Element.back().Id = File.StepIntegerToken();
-		}
-		else if ( File.IsStringToken( "Info" ) ) {
-			File.NextToken();
-			
-			// Depending on the creation mode, set the info of the appropriate part //
+			// Depending on the creation mode, set the Id of the appropriate part //
 			if ( CreateMode == ElementMode )
-				Element.back().Info = File.StepIntegerToken();
+				Element.back().Id = File.StepIntegerToken();
 			else if ( CreateMode == LinkMode )
-				Link.back().Info = File.StepIntegerToken();
+				Link.back().Id = File.StepIntegerToken();
 		}
+//		else if ( File.IsStringToken( "Info" ) ) {
+//			File.NextToken();
+//			
+//			// Depending on the creation mode, set the info of the appropriate part //
+//			if ( CreateMode == ElementMode )
+//				Element.back().Info = File.StepIntegerToken();
+//			else if ( CreateMode == LinkMode )
+//				Link.back().Info = File.StepIntegerToken();
+//		}
 		else if ( File.IsStringToken( "Pair" ) ) {
 			File.NextToken();
 			
@@ -212,10 +216,10 @@ void cPolyMap::Save( const char* FileName ) const {
 			File.Write() << "Id " << Element[idx].Id << endl;
 		}
 
-		// If Info is not zero, write it //
-		if ( Element[idx].Info != 0 ) {
-			File.Write() << "Info " << Element[idx].Info << endl;
-		}
+//		// If Info is not zero, write it //
+//		if ( Element[idx].Info != 0 ) {
+//			File.Write() << "Info " << Element[idx].Info << endl;
+//		}
 		
 		// Write Vertices //
 		for ( size_t idx2 = 0; idx2 < Element[idx].Vertex.size(); idx2++ ) {
@@ -245,15 +249,20 @@ void cPolyMap::Save( const char* FileName ) const {
 			Link[idx].a << " " <<
 			Link[idx].b << endl;
 		
-		// If Id is not zero, write it //
+		// If Type is not zero, write it //
 		if ( Link[idx].Type != 0 ) {
+			File.Write() << "Type " << Link[idx].Type << endl;
+		}
+		
+		// If Id is not zero, write it //
+		if ( Link[idx].Id != 0 ) {
 			File.Write() << "Id " << Link[idx].Type << endl;
 		}
 
-		// If Info is not zero, write it //
-		if ( Link[idx].Info != 0 ) {
-			File.Write() << "Info " << Link[idx].Info << endl;
-		}
+//		// If Info is not zero, write it //
+//		if ( Link[idx].Info != 0 ) {
+//			File.Write() << "Info " << Link[idx].Info << endl;
+//		}
 	}
 	
 	// ----- Write Keys ----------------------------------------------------------------- //

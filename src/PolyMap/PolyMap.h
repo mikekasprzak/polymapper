@@ -48,24 +48,32 @@ public:
 	// The arbitrary data section //
 	std::vector< PMEData > Data;
 	
+	// The type of our strings table (optional) //
+	class StringEntry {
+	public:
+		std::string Name;
+		size_t Offset;
+	};
+	
+	// The strings table.  The new "nice" way to note additional properties. //
+	std::vector< StringEntry > String;
+	
 	// The type of the type.  Is it a collision polygon, or a safe zone polygon? //
 	size_t Id;
 	
 	// Additional information/subcategorization of the element (argument) //
-	int Info;
+	//int Info;
 
 public:
 	cPolyMapElement() :
 		Type( 0 ),
-		Id( 0 ),
-		Info( 0 )
+		Id( 0 )
 	{
 	}
 	
 	cPolyMapElement( const size_t _Type ) :
 		Type( _Type ),
-		Id( 0 ),
-		Info( 0 )
+		Id( 0 )
 	{
 	}
 	
@@ -112,20 +120,23 @@ public:
 	// The associated elements //
 	size_t a;
 	size_t b;
+
+	// The Id of the Link. //
+	size_t Id;
 	
 	// Additional information of the Link (argument) //
-	int Info;
+	//int Info;
 
 public:
 	cPolyMapLink() :
 		Type( 0 ),
-		Info( 0 )
+		Id( 0 )
 	{
 	}
 
 	cPolyMapLink( const size_t _Type ) :
 		Type( _Type ),
-		Info( 0 )
+		Id( 0 )
 	{
 	}
 };

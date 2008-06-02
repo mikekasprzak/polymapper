@@ -6,6 +6,9 @@
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+// TODO: Test_Point_Inside_Sphere2D.  Vs should (?) be reserved for Sphere Vs Sphere?
+//   No.  Testing is one thing.  A test means there's a contact.  Inside means it's entirely //
+//   contained within the other one. //
 inline bool TestPointVsSphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
 	Vector2D Diff = VsPos - Pos;
 	return Diff.MagnitudeSquared() < (VsRadius * VsRadius);

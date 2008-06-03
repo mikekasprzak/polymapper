@@ -14,6 +14,7 @@ void cPolyMap::Load( const char* FileName ) {
 	
 	// Tracked offset variable, if we choose to use the displacement command "Offset" //
 	Vector2D Offset;
+	Real Scalar = 1;
 	
 	// An enumeration for tracking the current creation mode, for keyword reuse //
 	enum {
@@ -30,36 +31,36 @@ void cPolyMap::Load( const char* FileName ) {
 			File.NextToken();
 			Element.push_back( cPolyMapElement( PME_NODE ) );
 
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+			Element.back().Center.x = (File.StepFloatToken() * Scalar) + Offset.x;
+			Element.back().Center.y = (File.StepFloatToken() * Scalar) + Offset.y;
+//			Element.back().Center.z = (File.StepFloatToken() * Scalar) + Offset.z;
 		}
 		else if ( File.IsStringToken( "Sphere" ) ) {
 			CreateMode = ElementMode;
 			File.NextToken();
 			Element.push_back( cPolyMapElement( PME_SPHERE ) );
 
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+			Element.back().Center.x = (File.StepFloatToken() * Scalar) + Offset.x;
+			Element.back().Center.y = (File.StepFloatToken() * Scalar) + Offset.y;
+//			Element.back().Center.z = (File.StepFloatToken() * Scalar) + Offset.z;
 		}
 		else if ( File.IsStringToken( "Rect" ) ) {
 			CreateMode = ElementMode;
 			File.NextToken();
 			Element.push_back( cPolyMapElement( PME_RECT ) );
 
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+			Element.back().Center.x = (File.StepFloatToken() * Scalar) + Offset.x;
+			Element.back().Center.y = (File.StepFloatToken() * Scalar) + Offset.y;
+//			Element.back().Center.z = (File.StepFloatToken() * Scalar) + Offset.z;
 		}
 		else if ( File.IsStringToken( "Poly" ) ) {
 			CreateMode = ElementMode;
 			File.NextToken();
 			Element.push_back( cPolyMapElement( PME_POLY ) );
 
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+			Element.back().Center.x = (File.StepFloatToken() * Scalar) + Offset.x;
+			Element.back().Center.y = (File.StepFloatToken() * Scalar) + Offset.y;
+//			Element.back().Center.z = (File.StepFloatToken() * Scalar) + Offset.z;
 		}
 //		else if ( File.IsStringToken( "Curve" ) ) {
 //			CreateMode = ElementMode;
@@ -105,12 +106,17 @@ void cPolyMap::Load( const char* FileName ) {
 			Offset.y = File.StepFloatToken();
 //			Offset.z = File.StepFloatToken();
 		}
+		else if ( File.IsStringToken( "Scalar" ) ) {
+			File.NextToken();
+			
+			Scalar = File.StepFloatToken();
+		}
 		else if ( File.IsStringToken( "Center" ) ) {
 			File.NextToken();
 			
-			Element.back().Center.x = File.StepFloatToken() + Offset.x;
-			Element.back().Center.y = File.StepFloatToken() + Offset.y;
-//			Element.back().Center.z = File.StepFloatToken() + Offset.z;
+			Element.back().Center.x = (File.StepFloatToken() * Scalar) + Offset.x;
+			Element.back().Center.y = (File.StepFloatToken() * Scalar) + Offset.y;
+//			Element.back().Center.z = (File.StepFloatToken() * Scalar) + Offset.z;
 		}
 		else if ( File.IsStringToken( "Type" ) ) {
 			File.NextToken();
@@ -151,9 +157,9 @@ void cPolyMap::Load( const char* FileName ) {
 		else if ( File.IsStringToken( "Vertex" ) ) {
 			File.NextToken();
 			
-			float vx = File.StepFloatToken() + Offset.x;
-			float vy = File.StepFloatToken() + Offset.y;
-//			float vz = File.StepFloatToken() + Offset.z;
+			float vx = (File.StepFloatToken() * Scalar) + Offset.x;
+			float vy = (File.StepFloatToken() * Scalar) + Offset.y;
+//			float vz = (File.StepFloatToken() * Scalar) + Offset.z;
 			
 			Element.back().Vertex.push_back( Vector2D( vx, vy ) );
 //			Element.back().Vertex.push_back( Vector3D( vx, vy, vz ) );
@@ -162,7 +168,7 @@ void cPolyMap::Load( const char* FileName ) {
 			File.NextToken();
 			
 			cPolyMapElement::PMEData MyData;
-			MyData.f = File.StepFloatToken();
+			MyData.f = (File.StepFloatToken() * Scalar);
 			
 			Element.back().Data.push_back( MyData );
 		}

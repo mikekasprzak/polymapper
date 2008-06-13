@@ -12,6 +12,8 @@ struct cNearest_PointInfo_On_Line2D {
 	Vector2D Line;
 	Vector2D LineNormal;
 	Real LineLength;
+
+	int Corner;
 	
 	Vector2D CornerToPoint;
 	Real DistanceOnLine;
@@ -19,6 +21,7 @@ struct cNearest_PointInfo_On_Line2D {
 // - ------------------------------------------------------------------------------------------ - //
 inline const cNearest_PointInfo_On_Line2D Nearest_PointInfo_On_Line2D( const Vector2D& p, const Vector2D& a, const Vector2D& b ) {
 	cNearest_PointInfo_On_Line2D Info;
+	Info.Corner = 0;
 	
 	// Calculate our notable rays //
 	Info.Line = b - a; // ab //
@@ -32,11 +35,13 @@ inline const cNearest_PointInfo_On_Line2D Nearest_PointInfo_On_Line2D( const Vec
 	Info.DistanceOnLine = Info.CornerToPoint * Info.LineNormal;
 	
 	// Set Point to a position on the line //
-	if ( Info.DistanceOnLine < Real::Zero ) {
+	if ( Info.DistanceOnLine <= Real::Zero ) {
 		Info.Point = a;
+		Info.Corner = 1;
 	}
-	else if ( Info.DistanceOnLine > Info.LineLength ) {
+	else if ( Info.DistanceOnLine >= Info.LineLength ) {
 		Info.Point = b;
+		Info.Corner = 2;
 	}
 	else {
 		Info.Point = a + (Info.LineNormal * Info.DistanceOnLine);

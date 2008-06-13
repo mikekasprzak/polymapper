@@ -14,6 +14,10 @@ struct cNearest_PointInfo_On_Chain2D {
 	Real EdgeDistanceSquared;
 	int EdgeIndex;
 	
+	int Corner;
+	Vector2D PreviousLine;
+	Vector2D NextLine;
+	
 	inline const Real EdgeDistance() const {
 		return EdgeDistanceSquared.Sqrt();
 	}
@@ -22,9 +26,10 @@ struct cNearest_PointInfo_On_Chain2D {
 // Get the nearest Edge Point //
 inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	cNearest_PointInfo_On_Chain2D Info;
-	cNearest_PointInfo_On_Line2D LineInfo;
 	
-	if ( VsCount >= 1 ) {
+	if ( VsCount >= 2 ) {
+		cNearest_PointInfo_On_Line2D LineInfo;
+		
 		LineInfo = Nearest_PointInfo_On_Line2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
 		
 		Info.Point = LineInfo.Point;
@@ -33,7 +38,11 @@ inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const V
 		Info.EdgeDistanceSquared = (Info.Point - Pos).MagnitudeSquared();
 		Info.EdgeIndex = VsCount - 1;
 		
+		Info.Corner = LineInfo.Corner;
+		Info.PreviousLine = VsPoint[ VsCount - 1 ] - VsPoint[ VsCount - 2 ];
+		
 		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
+			Vector2D LastLine = LineInfo.Line;
 			LineInfo = Nearest_PointInfo_On_Line2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
 
 			Real NewDistanceSquared = (LineInfo.Point - Pos).MagnitudeSquared();
@@ -41,13 +50,22 @@ inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const V
 			if ( Info.EdgeDistanceSquared > NewDistanceSquared ) {
 				Info.Point = LineInfo.Point;
 				Info.Normal = LineInfo.LineNormal;
+				
 				Info.EdgeDistanceSquared = NewDistanceSquared;
 				Info.EdgeIndex = idx;
+				
+				Info.Corner = LineInfo.Corner;
+				Info.PreviousLine = LastLine;
 			}
 		}
+
+		if ( Info.EdgeIndex == VsCount - 1 )
+			Info.NextLine = VsPoint[ 1 ] - VsPoint[ 0 ];
+		else
+			Info.NextLine = VsPoint[ Info.EdgeIndex + 2 ] - VsPoint[ Info.EdgeIndex + 1 ];
+		
+		Info.Normal = -Info.Normal.Tangent();
 	}
-	
-	Info.Normal = -Info.Normal.Tangent();
 	
 	return Info;
 }

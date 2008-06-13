@@ -15,16 +15,89 @@ inline const bool Test_Point_Vs_CapsuleChain2D( const Vector2D& Pos, const Vecto
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+// Get the nearest Edge Point //
+inline const Vector2D Nearest_EdgePoint_On_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
+	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
+	
+	Vector2D Line = Info.Point - Pos;
+	return Info.Point - (Line.Normal() * VsRadius);
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+
+// - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Inner Edge Point //
 inline const Vector2D Nearest_InnerEdgePoint_On_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
-	return Info.Point + (Info.Normal * VsRadius);
+	if ( Info.Corner == 1 ) {
+		// If it's a concave angle //
+		if ( Info.PreviousLine * Info.Normal >= Real::Zero ) {
+			//printf( "%i - Concave\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point - (Line.Normal() * VsRadius);
+		}
+		// If it's a convex angle //
+		else {
+			//printf( "%i - Convex\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point + (Line.Normal() * VsRadius);
+		}
+	}
+	else if ( Info.Corner == 2 ) {
+		// If it's a concave angle //
+		if ( Info.NextLine * Info.Normal <= Real::Zero ) {
+			//printf( "%i + Concave\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point - (Line.Normal() * VsRadius);
+		}
+		// If it's a convex angle //
+		else {
+			//printf( "%i + Convex\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point + (Line.Normal() * VsRadius);
+		}
+	}
+	else {
+		//printf( "%i - ???\n", Info.Corner );
+		return Info.Point + (Info.Normal * VsRadius);
+	}
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Outer Edge Point //
 inline const Vector2D Nearest_OuterEdgePoint_On_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
-	return Info.Point + (-Info.Normal * VsRadius);
+	if ( Info.Corner == 1 ) {
+		// If it's a concave angle //
+		if ( Info.PreviousLine * Info.Normal <= Real::Zero ) {
+			//printf( "%i - Concave\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point - (Line.Normal() * VsRadius);
+		}
+		// If it's a convex angle //
+		else {
+			//printf( "%i - Convex\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point + (Line.Normal() * VsRadius);
+		}
+	}
+	else if ( Info.Corner == 2 ) {
+		// If it's a concave angle //
+		if ( Info.NextLine * Info.Normal >= Real::Zero ) {
+			//printf( "%i + Concave\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point - (Line.Normal() * VsRadius);
+		}
+		// If it's a convex angle //
+		else {
+			//printf( "%i + Convex\n", Info.Corner );
+			Vector2D Line = Info.Point - Pos;
+			return Info.Point + (Line.Normal() * VsRadius);
+		}
+	}
+	else {
+		//printf( "%i - ???\n", Info.Corner );
+		return Info.Point + (-Info.Normal * VsRadius);
+	}
 }
 // - ------------------------------------------------------------------------------------------ - //
 

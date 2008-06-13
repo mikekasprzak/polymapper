@@ -7,52 +7,6 @@
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D Nearest_Point_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	Vector2D Point;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Point = Nearest_Point_On_Line2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
-			Vector2D NewPoint = Nearest_Point_On_Line2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
-			Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
-			
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Point = NewPoint;
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Point;
-}
-// - ------------------------------------------------------------------------------------------ - //
-// Get the position of the nearest corner point //
-inline const Vector2D Nearest_CornerPoint_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	Vector2D Point;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Point = VsPoint[ 0 ];
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 1; idx < VsCount; idx++ ) {
-			Real NewDistanceSquared = (VsPoint[ idx ] - Pos).MagnitudeSquared();
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Point = VsPoint[ idx ];
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Point;
-}
-// - ------------------------------------------------------------------------------------------ - //
-
-
-// - ------------------------------------------------------------------------------------------ - //
 struct cNearest_PointInfo_On_Chain2D {
 	Vector2D Point;
 	Vector2D Normal;
@@ -99,6 +53,52 @@ inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const V
 }
 // - ------------------------------------------------------------------------------------------ - //
 
+// - ------------------------------------------------------------------------------------------ - //
+inline const Vector2D Nearest_Point_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+//	Vector2D Point;
+//	Real DistanceSquared;
+//	
+//	if ( VsCount >= 1 ) {
+//		Point = Nearest_Point_On_Line2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
+//		DistanceSquared = (Point - Pos).MagnitudeSquared();
+//		
+//		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
+//			Vector2D NewPoint = Nearest_Point_On_Line2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
+//			Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
+//			
+//			if ( DistanceSquared > NewDistanceSquared ) {
+//				Point = NewPoint;
+//				DistanceSquared = NewDistanceSquared;
+//			}
+//		}
+//	}
+//	
+//	return Point;
+	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
+	return Info.Point;
+}
+// - ------------------------------------------------------------------------------------------ - //
+// Get the position of the nearest corner point //
+inline const Vector2D Nearest_CornerPoint_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+	Vector2D Point;
+	Real DistanceSquared;
+	
+	if ( VsCount >= 1 ) {
+		Point = VsPoint[ 0 ];
+		DistanceSquared = (Point - Pos).MagnitudeSquared();
+		
+		for ( size_t idx = 1; idx < VsCount; idx++ ) {
+			Real NewDistanceSquared = (VsPoint[ idx ] - Pos).MagnitudeSquared();
+			if ( DistanceSquared > NewDistanceSquared ) {
+				Point = VsPoint[ idx ];
+				DistanceSquared = NewDistanceSquared;
+			}
+		}
+	}
+	
+	return Point;
+}
+// - ------------------------------------------------------------------------------------------ - //
 
 
 // - ------------------------------------------------------------------------------------------ - //

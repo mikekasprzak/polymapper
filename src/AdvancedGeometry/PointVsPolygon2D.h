@@ -3,7 +3,6 @@
 #define __AdvancedGeometry_PointVsPolygon2D_H__
 // - ------------------------------------------------------------------------------------------ - //
 #include <Math/Vector/Vector2D.h>
-#include "PointVsLine2D.h"
 #include "PointVsChain2D.h"
 // - ------------------------------------------------------------------------------------------ - //
 

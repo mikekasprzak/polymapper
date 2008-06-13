@@ -9,7 +9,7 @@
 // TODO: Test_Point_Inside_Sphere2D.  Vs should (?) be reserved for Sphere Vs Sphere?
 //   No.  Testing is one thing.  A test means there's a contact.  Inside means it's entirely //
 //   contained within the other one. //
-inline bool TestPointVsSphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
+inline bool Test_Point_Vs_Sphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
 	Vector2D Diff = VsPos - Pos;
 	return Diff.MagnitudeSquared() < (VsRadius * VsRadius);
 }
@@ -74,7 +74,7 @@ inline cPointVsSphere2D SolvePointVsSphere2D( const Vector2D& Pos, const Vector2
 
 // - ------------------------------------------------------------------------------------------ - //
 // Finds the nearest point, returning the same point if inside //
-inline Vector2D NearestPointOnSphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
+inline Vector2D Nearest_Point_On_Sphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
 	Vector2D Point = Pos - VsPos;
 	Real Mag = Point.NormalizeRet();
 	
@@ -85,7 +85,7 @@ inline Vector2D NearestPointOnSphere2D( const Vector2D& Pos, const Vector2D& VsP
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Finds the nearest point on an edge, no matter what //
-inline Vector2D NearestPointOnEdgeOfSphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
+inline Vector2D Nearest_Point_OnEdgeOf_Sphere2D( const Vector2D& Pos, const Vector2D& VsPos, const Real VsRadius ) {
 	Vector2D Point = Pos - VsPos;
 	Real Mag = Point.NormalizeRet();
 	

@@ -9,8 +9,8 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 inline const bool TestPointVsCapsule2D( const Vector2D& Pos, const Vector2D& VsA, const Vector2D& VsB, const Real VsRadius ) {
-	Vector2D VsPoint = NearestPointOnLine2D( Pos, VsA, VsB );
-	return TestPointVsSphere2D( Pos, VsPoint, VsRadius );
+	Vector2D VsPoint = Nearest_Point_On_Line2D( Pos, VsA, VsB );
+	return Test_Point_Vs_Sphere2D( Pos, VsPoint, VsRadius );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

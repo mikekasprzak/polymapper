@@ -10,7 +10,7 @@
 // - ------------------------------------------------------------------------------------------ - //
 inline const bool Test_Point_Vs_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoints, const size_t VsCount, const Real VsRadius ) {
 	Vector2D VsPoint = Nearest_Point_On_Chain2D( Pos, VsPoints, VsCount );
-	return TestPointVsSphere2D( Pos, VsPoint, VsRadius );
+	return Test_Point_Vs_Sphere2D( Pos, VsPoint, VsRadius );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

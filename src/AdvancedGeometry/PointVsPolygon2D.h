@@ -9,7 +9,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // Function by Darel Rex Finley - http://alienryderflex.com/polygon/
-bool TestPointVsPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+bool Test_Point_Vs_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	// Odd number of nodes //
 	bool OddNodes = false;
 	
@@ -37,39 +37,39 @@ bool TestPointVsPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const s
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_Point_OnEdgeOf_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return Nearest_Point_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	if ( TestPointVsPolygon2D( Pos, VsPoint, VsCount ) ) {
+inline const Vector2D Nearest_Point_On_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+	if ( Test_Point_Vs_Polygon2D( Pos, VsPoint, VsCount ) ) {
 		return Pos;
 	}
 	else {
-		return NearestPointOnEdgeOfPolygon2D( Pos, VsPoint, VsCount );
+		return Nearest_Point_OnEdgeOf_Polygon2D( Pos, VsPoint, VsCount );
 	}
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest corner point //
-inline const Vector2D NearestCornerPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return Nearest_CornerPoint_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestCornerPointIndexOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return Nearest_CornerPointIndex_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const int NearestEdgeIndexOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const int Nearest_EdgeIndex_Of_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return Nearest_EdgeIndex_Of_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestEdgeNormalOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_EdgeNormal_Of_Polygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return Nearest_EdgeNormal_Of_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //

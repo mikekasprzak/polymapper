@@ -17,13 +17,13 @@ inline const bool TestPointVsCapsuleChain2D( const Vector2D& Pos, const Vector2D
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Inner Edge Point //
 inline const Vector2D NearestInnerEdgePointOnCapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
-	cNearestEdgePointOnChain2DInfo Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
+	cNearestEdgePointInfoOnChain2D Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
 	return Info.Point + (Info.Normal * VsRadius);
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Outer Edge Point //
 inline const Vector2D NearestOuterEdgePointOnCapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
-	cNearestEdgePointOnChain2DInfo Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
+	cNearestEdgePointInfoOnChain2D Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
 	return Info.Point + (-Info.Normal * VsRadius);
 }
 // - ------------------------------------------------------------------------------------------ - //

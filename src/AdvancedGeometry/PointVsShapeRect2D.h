@@ -7,7 +7,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-bool TestPointVsShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
+bool Test_Point_Vs_ShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
 	if ( v.x >= P1.x )
 		if ( v.x < (P1.x + Shape.x) )
 			if ( v.y >= P1.y )
@@ -16,7 +16,7 @@ bool TestPointVsShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-inline const Vector2D NearestPointOnShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
+inline const Vector2D Nearest_Point_On_ShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
 	Vector2D Point;
 	Vector2D P2 = P1 + Shape;
 
@@ -38,7 +38,7 @@ inline const Vector2D NearestPointOnShapeRect2D( const Vector2D& v, const Vector
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const Vector2D NearestCornerPointOnEdgeOfShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_ShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
 	Vector2D Point;
 	Vector2D P2 = P1 + Shape;
 
@@ -56,7 +56,7 @@ inline const Vector2D NearestCornerPointOnEdgeOfShapeRect2D( const Vector2D& v, 
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const size_t NearestCornerPointIndexOnEdgeOfShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_ShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
 	size_t Index = 0;
 	Vector2D P2 = P1 + Shape;
 
@@ -74,8 +74,8 @@ inline const size_t NearestCornerPointIndexOnEdgeOfShapeRect2D( const Vector2D& 
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P1. //
-inline const Vector2D NearestPointOnEdgeOfShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
-	Vector2D Point = NearestPointOnShapeRect2D( v, P1, Shape );
+inline const Vector2D Nearest_Point_OnEdgeOf_ShapeRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& Shape ) {
+	Vector2D Point = Nearest_Point_On_ShapeRect2D( v, P1, Shape );
 	Vector2D P2 = P1 + Shape;
 	
 	// If we're inside //

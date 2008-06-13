@@ -7,7 +7,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-bool TestPointVsPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+bool Test_Point_Vs_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
 	if ( v.x >= P1.x )
 		if ( v.x < P2.x )
 			if ( v.y >= P1.y )
@@ -16,7 +16,7 @@ bool TestPointVsPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-inline const Vector2D NearestPointOnPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+inline const Vector2D Nearest_Point_On_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
 	Vector2D Point;
 
 	if ( v.x < P1.x )
@@ -37,7 +37,7 @@ inline const Vector2D NearestPointOnPairRect2D( const Vector2D& v, const Vector2
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const Vector2D NearestCornerPointOnEdgeOfPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
 	Vector2D Point;
 
 	if ( (v.x - P1.x).Abs() < (v.x - P2.x).Abs() )
@@ -54,7 +54,7 @@ inline const Vector2D NearestCornerPointOnEdgeOfPairRect2D( const Vector2D& v, c
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const size_t NearestCornerPointIndexOnEdgeOfPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
 	size_t Index = 0;
 
 	if ( (v.x - P1.x).Abs() < (v.x - P2.x).Abs() )
@@ -71,8 +71,8 @@ inline const size_t NearestCornerPointIndexOnEdgeOfPairRect2D( const Vector2D& v
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const Vector2D NearestPointOnEdgeOfPairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
-	Vector2D Point = NearestPointOnPairRect2D( v, P1, P2 );
+inline const Vector2D Nearest_Point_OnEdgeOf_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+	Vector2D Point = Nearest_Point_On_PairRect2D( v, P1, P2 );
 	
 	// If we're inside //
 	if ( Point == v ) {

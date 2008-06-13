@@ -7,7 +7,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-bool TestPointVsRadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
+bool Test_Point_Vs_RadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
 	if ( v.x >= (Center.x - HalfShape.x) )
 		if ( v.x < (Center.x + HalfShape.x) )
 			if ( v.y >= (Center.y - HalfShape.y) )
@@ -16,7 +16,7 @@ bool TestPointVsRadiusRect2D( const Vector2D& v, const Vector2D& Center, const V
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-inline const Vector2D NearestPointOnRadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
+inline const Vector2D Nearest_Point_On_RadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
 	Vector2D Point;
 	Vector2D P1 = Center - HalfShape;
 	Vector2D P2 = Center + HalfShape;
@@ -39,7 +39,7 @@ inline const Vector2D NearestPointOnRadiusRect2D( const Vector2D& v, const Vecto
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const Vector2D NearestCornerPointOnEdgeOfRadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_RadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
 	Vector2D Point;
 	Vector2D P1 = Center - HalfShape;
 	Vector2D P2 = Center + HalfShape;
@@ -58,7 +58,7 @@ inline const Vector2D NearestCornerPointOnEdgeOfRadiusRect2D( const Vector2D& v,
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P2. //
-inline const size_t NearestCornerPointIndexOnEdgeOfRadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_RadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
 	size_t Index = 0;
 	Vector2D P1 = Center - HalfShape;
 	Vector2D P2 = Center + HalfShape;
@@ -77,8 +77,8 @@ inline const size_t NearestCornerPointIndexOnEdgeOfRadiusRect2D( const Vector2D&
 }
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: Does not require that P2 be larger than P1. //
-inline const Vector2D NearestPointOnEdgeOfRadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
-	Vector2D Point = NearestPointOnRadiusRect2D( v, Center, HalfShape );
+inline const Vector2D Nearest_Point_OnEdgeOf_RadiusRect2D( const Vector2D& v, const Vector2D& Center, const Vector2D& HalfShape ) {
+	Vector2D Point = Nearest_Point_On_RadiusRect2D( v, Center, HalfShape );
 	Vector2D P1 = Center - HalfShape;
 	Vector2D P2 = Center + HalfShape;
 	

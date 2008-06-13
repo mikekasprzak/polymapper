@@ -38,7 +38,7 @@ bool TestPointVsPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const s
 
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D NearestPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	return NearestPointOnChain2D( Pos, VsPoint, VsCount );
+	return Nearest_Point_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D NearestPointOnPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
@@ -54,23 +54,23 @@ inline const Vector2D NearestPointOnPolygon2D( const Vector2D& Pos, const Vector
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest corner point //
 inline const Vector2D NearestCornerPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	return NearestCornerPointOnChain2D( Pos, VsPoint, VsCount );
+	return Nearest_CornerPoint_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
 inline const size_t NearestCornerPointIndexOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	return NearestCornerPointIndexOnChain2D( Pos, VsPoint, VsCount );
+	return Nearest_CornerPointIndex_On_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
 inline const int NearestEdgeIndexOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	return NearestEdgeIndexOfChain2D( Pos, VsPoint, VsCount );
+	return Nearest_EdgeIndex_Of_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D NearestEdgeNormalOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	return NearestEdgeNormalOfChain2D( Pos, VsPoint, VsCount );
+	return Nearest_EdgeNormal_Of_Chain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 

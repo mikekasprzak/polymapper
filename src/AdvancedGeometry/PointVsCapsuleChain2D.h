@@ -8,21 +8,21 @@
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const bool TestPointVsCapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoints, const size_t VsCount, const Real VsRadius ) {
-	Vector2D VsPoint = NearestPointOnChain2D( Pos, VsPoints, VsCount );
+inline const bool Test_Point_Vs_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoints, const size_t VsCount, const Real VsRadius ) {
+	Vector2D VsPoint = Nearest_Point_On_Chain2D( Pos, VsPoints, VsCount );
 	return TestPointVsSphere2D( Pos, VsPoint, VsRadius );
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Inner Edge Point //
-inline const Vector2D NearestInnerEdgePointOnCapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
+inline const Vector2D Nearest_InnerEdgePoint_On_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.Point + (Info.Normal * VsRadius);
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Outer Edge Point //
-inline const Vector2D NearestOuterEdgePointOnCapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
+inline const Vector2D Nearest_OuterEdgePoint_On_CapsuleChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount, const Real VsRadius ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.Point + (-Info.Normal * VsRadius);
 }

@@ -6,7 +6,7 @@
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_Point_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	Vector2D Point;
 	Real DistanceSquared;
 	
@@ -29,7 +29,7 @@ inline const Vector2D NearestPointOnChain2D( const Vector2D& Pos, const Vector2D
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest corner point //
-inline const Vector2D NearestCornerPointOnChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_CornerPoint_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	Vector2D Point;
 	Real DistanceSquared;
 	
@@ -102,7 +102,7 @@ inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const V
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestCornerPointIndexOnChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const size_t Nearest_CornerPointIndex_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	size_t Index;
 	Real DistanceSquared;
 	
@@ -123,7 +123,7 @@ inline const size_t NearestCornerPointIndexOnChain2D( const Vector2D& Pos, const
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest edge //
-inline const int NearestEdgeIndexOfChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const int Nearest_EdgeIndex_Of_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.EdgeIndex;
 }
@@ -132,7 +132,7 @@ inline const int NearestEdgeIndexOfChain2D( const Vector2D& Pos, const Vector2D*
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Edge Normal //
-inline const Vector2D NearestEdgeNormalOfChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_EdgeNormal_Of_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.Normal;
 }

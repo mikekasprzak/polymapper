@@ -52,7 +52,7 @@ inline const Vector2D NearestCornerPointOnChain2D( const Vector2D& Pos, const Ve
 
 
 // - ------------------------------------------------------------------------------------------ - //
-struct cNearestEdgePointInfoOnChain2D {
+struct cNearest_PointInfo_On_Chain2D {
 	Vector2D Point;
 	Vector2D Normal;
 	
@@ -64,9 +64,9 @@ struct cNearestEdgePointInfoOnChain2D {
 	}
 };
 // - ------------------------------------------------------------------------------------------ - //
-// Get the nearest Inner Edge Point //
-inline const cNearestEdgePointInfoOnChain2D NearestEdgePointInfoOnChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	cNearestEdgePointInfoOnChain2D Info;
+// Get the nearest Edge Point //
+inline const cNearest_PointInfo_On_Chain2D Nearest_PointInfo_On_Chain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+	cNearest_PointInfo_On_Chain2D Info;
 	cNearest_PointInfo_On_Line2D LineInfo;
 	
 	if ( VsCount >= 1 ) {
@@ -124,7 +124,7 @@ inline const size_t NearestCornerPointIndexOnChain2D( const Vector2D& Pos, const
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest edge //
 inline const int NearestEdgeIndexOfChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	cNearestEdgePointInfoOnChain2D Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
+	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.EdgeIndex;
 }
 // - ------------------------------------------------------------------------------------------ - //
@@ -133,7 +133,7 @@ inline const int NearestEdgeIndexOfChain2D( const Vector2D& Pos, const Vector2D*
 // - ------------------------------------------------------------------------------------------ - //
 // Get the nearest Edge Normal //
 inline const Vector2D NearestEdgeNormalOfChain2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	cNearestEdgePointInfoOnChain2D Info = NearestEdgePointInfoOnChain2D( Pos, VsPoint, VsCount );
+	cNearest_PointInfo_On_Chain2D Info = Nearest_PointInfo_On_Chain2D( Pos, VsPoint, VsCount );
 	return Info.Normal;
 }
 // - ------------------------------------------------------------------------------------------ - //

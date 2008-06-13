@@ -4,6 +4,7 @@
 // - ------------------------------------------------------------------------------------------ - //
 #include <Math/Vector/Vector2D.h>
 #include "PointVsLine2D.h"
+#include "PointVsChain2D.h"
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
@@ -17,9 +18,11 @@ bool TestPointVsPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const s
 
 	// For every side //
 	for ( size_t i = 0; i < VsCount; i++ ) {
-		// Test if a side crosses the y axis //
+		// Test if the pair of points are on different sides of the point via the y axis //
+		// NOTE: This rules out the i.y == j.y case, because < & >= //
 		if ( ((VsPoint[i].y < Pos.y) && (VsPoint[j].y >= Pos.y )) || ((VsPoint[j].y < Pos.y) && (VsPoint[i].y >= Pos.y)) ) {
-			// TODO: Uhh... I'm not sure. //
+			// (Vs[i].x + (y - Vs[i].y) / AHeight * AWidth) < x //
+			// AWidth and AHeight are dimensions that include a sign //
 			if (VsPoint[i].x + (Pos.y-VsPoint[i].y) / (VsPoint[j].y-VsPoint[i].y) * (VsPoint[j].x-VsPoint[i].x) < Pos.x) {
 				OddNodes = !OddNodes;
 			}
@@ -35,25 +38,7 @@ bool TestPointVsPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const s
 
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D NearestPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	Vector2D Point;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Point = NearestPointOnLine2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
-			Vector2D NewPoint = NearestPointOnLine2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
-			Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
-			
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Point = NewPoint;
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Point;
+	return NearestPointOnChain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 inline const Vector2D NearestPointOnPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
@@ -69,100 +54,25 @@ inline const Vector2D NearestPointOnPolygon2D( const Vector2D& Pos, const Vector
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest corner point //
 inline const Vector2D NearestCornerPointOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	Vector2D Point;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Point = VsPoint[ 0 ];
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 1; idx < VsCount; idx++ ) {
-			Real NewDistanceSquared = (VsPoint[ idx ] - Pos).MagnitudeSquared();
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Point = VsPoint[ idx ];
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Point;
+	return NearestCornerPointOnChain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
 inline const size_t NearestCornerPointIndexOnEdgeOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	size_t Index;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Index = 0;
-		DistanceSquared = (VsPoint[ 0 ] - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 1; idx < VsCount; idx++ ) {
-			Real NewDistanceSquared = (VsPoint[ idx ] - Pos).MagnitudeSquared();
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Index = idx;
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Index;
+	return NearestCornerPointIndexOnChain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
 inline const int NearestEdgeIndexOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	size_t Index = -1;
-	Vector2D Point;
-	Real DistanceSquared;
-	
-	if ( VsCount >= 1 ) {
-		Index = VsCount - 1;
-		Point = NearestPointOnLine2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		
-		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
-			Vector2D NewPoint = NearestPointOnLine2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
-			Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
-			
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Index = idx;
-				Point = NewPoint;
-				DistanceSquared = NewDistanceSquared;
-			}
-		}
-	}
-	
-	return Index;
+	return NearestEdgeIndexOfChain2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
-
 inline const Vector2D NearestEdgeNormalOfPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
-	Vector2D Point;
-	Real DistanceSquared;
-	Vector2D Normal;
-	
-	if ( VsCount >= 1 ) {
-		Point = NearestPointOnLine2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
-		DistanceSquared = (Point - Pos).MagnitudeSquared();
-		Normal = (VsPoint[ VsCount - 1 ] - VsPoint[ 0 ]);
-		
-		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
-			Vector2D NewPoint = NearestPointOnLine2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
-			Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
-			Vector2D NewNormal = (VsPoint[ idx ] - VsPoint[ idx + 1 ]);
-			
-			if ( DistanceSquared > NewDistanceSquared ) {
-				Point = NewPoint;
-				DistanceSquared = NewDistanceSquared;
-				Normal = NewNormal;
-			}
-		}
-	}
-	
-	return Normal.Tangent().Normal();	
+	return NearestEdgeNormalOfChain2D( Pos, VsPoint, VsCount );
 }
+// - ------------------------------------------------------------------------------------------ - //
 
 
 //// - ------------------------------------------------------------------------------------------ - //

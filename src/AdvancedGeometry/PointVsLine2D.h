@@ -77,7 +77,7 @@ inline const cNearest_PointInfo_On_Line2D Nearest_PointInfo_On_Line2D( const Vec
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnLine2D( const Vector2D& p, const Vector2D& a, const Vector2D& b ) {
+inline const Vector2D Nearest_Point_On_Line2D( const Vector2D& p, const Vector2D& a, const Vector2D& b ) {
 	cNearest_PointInfo_On_Line2D Info = Nearest_PointInfo_On_Line2D( p, a, b );
 	return Info.Point;
 }

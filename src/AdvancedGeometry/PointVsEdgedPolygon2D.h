@@ -45,13 +45,13 @@ inline const Vector2D NearestPointOnEdgeOfEdgedPolygon2D( const Vector2D& Pos, c
 	
 	if ( VsCount >= 1 ) {
 		if ( VsEnabled[ VsCount - 1 ] ) {
-			Point = NearestPointOnLine2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
+			Point = Nearest_Point_On_Line2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
 			DistanceSquared = (Point - Pos).MagnitudeSquared();
 		}
 		
 		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
 			if ( VsEnabled[idx] ) {
-				Vector2D NewPoint = NearestPointOnLine2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
+				Vector2D NewPoint = Nearest_Point_On_Line2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
 				Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
 				
 				if ( DistanceSquared > NewDistanceSquared ) {
@@ -140,13 +140,13 @@ inline const size_t NearestEdgeIndexOfEdgedPolygon2D( const Vector2D& Pos, const
 	if ( VsCount >= 1 ) {
 		if ( VsEnabled[ VsCount - 1 ] ) {
 			Index = VsCount - 1;
-			Point = NearestPointOnLine2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
+			Point = Nearest_Point_On_Line2D( Pos, VsPoint[ VsCount - 1 ], VsPoint[ 0 ] );
 			DistanceSquared = (Point - Pos).MagnitudeSquared();
 		}
 		
 		for ( size_t idx = 0; idx < VsCount - 1; idx++ ) {
 			if ( VsEnabled[idx] ) {
-				Vector2D NewPoint = NearestPointOnLine2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
+				Vector2D NewPoint = Nearest_Point_On_Line2D( Pos, VsPoint[ idx ], VsPoint[ idx + 1 ] );
 				Real NewDistanceSquared = (NewPoint - Pos).MagnitudeSquared();
 				
 				if ( DistanceSquared > NewDistanceSquared ) {

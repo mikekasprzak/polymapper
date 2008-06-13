@@ -11,7 +11,7 @@
 //   Other actions can ignore sides, since their job is to find the nearest one. //
 // - ------------------------------------------------------------------------------------------ - //
 // Function by Darel Rex Finley - http://alienryderflex.com/polygon/
-bool TestPointVsEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+bool Test_Point_Vs_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
 	// Odd number of nodes //
 	bool OddNodes = false;
 	
@@ -39,7 +39,7 @@ bool TestPointVsEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, co
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnEdgeOfEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+inline const Vector2D Nearest_Point_OnEdgeOf_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
 	Vector2D Point;
 	Real DistanceSquared = 999999;
 	
@@ -65,19 +65,19 @@ inline const Vector2D NearestPointOnEdgeOfEdgedPolygon2D( const Vector2D& Pos, c
 	return Point;
 }
 // - ------------------------------------------------------------------------------------------ - //
-inline const Vector2D NearestPointOnEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
-	if ( TestPointVsEdgedPolygon2D( Pos, VsPoint, VsEnabled, VsCount ) ) {
+inline const Vector2D Nearest_Point_On_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+	if ( Test_Point_Vs_EdgedPolygon2D( Pos, VsPoint, VsEnabled, VsCount ) ) {
 		return Pos;
 	}
 	else {
-		return NearestPointOnEdgeOfEdgedPolygon2D( Pos, VsPoint, VsEnabled, VsCount );
+		return Nearest_Point_OnEdgeOf_EdgedPolygon2D( Pos, VsPoint, VsEnabled, VsCount );
 	}
 }
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest corner point //
-inline const Vector2D NearestCornerPointOnEdgeOfEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
 	Vector2D Point;
 	Real DistanceSquared = 999999;
 	
@@ -104,7 +104,7 @@ inline const Vector2D NearestCornerPointOnEdgeOfEdgedPolygon2D( const Vector2D& 
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestCornerPointIndexOnEdgeOfEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
 	size_t Index = 0;
 	Real DistanceSquared = 999999;
 	
@@ -132,7 +132,7 @@ inline const size_t NearestCornerPointIndexOnEdgeOfEdgedPolygon2D( const Vector2
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestEdgeIndexOfEdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
+inline const size_t Nearest_EdgeIndex_Of_EdgedPolygon2D( const Vector2D& Pos, const Vector2D* VsPoint, const bool* VsEnabled, const size_t VsCount ) {
 	size_t Index = 0;
 	Vector2D Point;
 	Real DistanceSquared = 999999;

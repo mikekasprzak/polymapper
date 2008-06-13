@@ -7,7 +7,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest point //
-inline const Vector2D NearestPointOnPointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_Point_On_PointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	Vector2D Point;
 	Real DistanceSquared;
 	
@@ -28,17 +28,17 @@ inline const Vector2D NearestPointOnPointCluster2D( const Vector2D& Pos, const V
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest point //
-inline const Vector2D NearestCornerPointOnPointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_CornerPoint_On_PointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return NearestPointOnPointCluster2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the nearest point //
-inline const Vector2D NearestCornerPointOnEdgeOfPointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const Vector2D Nearest_CornerPoint_OnEdgeOf_PointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return NearestPointOnPointCluster2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the index of the nearest corner point //
-inline const size_t NearestCornerPointIndexOnPointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const size_t Nearest_CornerPointIndex_On_PointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	size_t Index;
 	Real DistanceSquared;
 	
@@ -59,7 +59,7 @@ inline const size_t NearestCornerPointIndexOnPointCluster2D( const Vector2D& Pos
 }
 // - ------------------------------------------------------------------------------------------ - //
 // Get the position of the corner point //
-inline const size_t NearestCornerPointIndexOnEdgeOfPointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
+inline const size_t Nearest_CornerPointIndex_OnEdgeOf_PointCluster2D( const Vector2D& Pos, const Vector2D* VsPoint, const size_t VsCount ) {
 	return NearestCornerPointIndexOnPointCluster2D( Pos, VsPoint, VsCount );
 }
 // - ------------------------------------------------------------------------------------------ - //

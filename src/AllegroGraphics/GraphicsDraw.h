@@ -19,6 +19,10 @@ inline void gfxDrawCross( const Vector2D& Center, const Real& Radius, const Colo
 	MatrixCross( Buffer, Matrix, Center, Radius, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawX( const Vector2D& Center, const Real& Radius, const ColorType Color = CurrentColor ) {
+	MatrixRadiusX( Buffer, Matrix, Center, Radius, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void gfxDrawLine( const Vector2D& P1, const Vector2D& P2, const ColorType Color = CurrentColor) {

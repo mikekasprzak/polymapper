@@ -61,6 +61,26 @@ inline void MatrixCross( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+inline void RadiusX( BITMAP* Target, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	line( Target, (int)(Pos.x - Radius), (int)(Pos.y - Radius), (int)(Pos.x + Radius), (int)(Pos.y + Radius), Color );
+	line( Target, (int)(Pos.x + Radius), (int)(Pos.y - Radius), (int)(Pos.x - Radius), (int)(Pos.y + Radius), Color );	
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void MatrixRadiusX( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const Real& Radius, const int Color ) {
+	// Transform our point by the matrix //
+	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+
+	// Transform our Radius by the Matrix //
+	// TODO: This isn't perfect.  Make it perfect. //
+	Real TrRadius = Matrix(0,0) * Radius;
+	
+	// Draw our box //
+	RadiusX( Target, Point, TrRadius, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+
+// - ------------------------------------------------------------------------------------------ - //
 inline void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {
 	// Get our points //
 	Vector2D Point[2];

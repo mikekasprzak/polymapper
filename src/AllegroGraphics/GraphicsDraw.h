@@ -15,6 +15,14 @@ inline void gfxDrawRadiusBox( const Vector2D& Center, const Real& Radius, const 
 	MatrixRadiusBox( Buffer, Matrix, Center, Radius, Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawCircleFill( const Vector2D& Center, const Real& Radius, const ColorType Color = CurrentColor ) {
+	MatrixCircleFill( Buffer, Matrix, Center, Radius, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawRadiusBoxFill( const Vector2D& Center, const Real& Radius, const ColorType Color = CurrentColor ) {
+	MatrixRadiusBoxFill( Buffer, Matrix, Center, Radius, Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxDrawCross( const Vector2D& Center, const Real& Radius, const ColorType Color = CurrentColor ) {
 	MatrixCross( Buffer, Matrix, Center, Radius, Color );
 }

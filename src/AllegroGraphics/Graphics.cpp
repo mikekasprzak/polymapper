@@ -15,6 +15,9 @@ namespace Screen {
 	Vector2D Shape;
 	Vector2D HalfShape;
 	// - -------------------------------------------------------------------------------------- - //
+	int ClipX, ClipY;
+	int ClipW, ClipH;
+	// - -------------------------------------------------------------------------------------- - //
 	ColorType Color;
 	ColorType NormalColor;
 	Real NormalLength;

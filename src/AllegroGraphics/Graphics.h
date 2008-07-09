@@ -42,6 +42,9 @@ namespace Screen {
 	extern int Height;
 	extern int Scalar;
 	
+	extern int ClipX, ClipY;
+	extern int ClipW, ClipH;
+	
 	extern Vector2D Shape;
 	extern Vector2D HalfShape;
 
@@ -214,6 +217,23 @@ inline void gfxConstrainCameraScale( const Real Min, const Real Max ) {
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxSetClip( const int x, const int y, const int w, const int h ) {
+	Screen::ClipX = x;
+	Screen::ClipY = y;
+	Screen::ClipW = w;
+	Screen::ClipH = h;
+	
+	// NOTE: Allegro is inclusive of the co-ordinate passed //
+	set_clip_rect( Buffer, x, y, x+w-1, y+h-1 );
+	//glViewport(x,y,w,h);
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxResetClip( ) {
+	gfxSetClip( 0, 0, Screen::Width, Screen::Height );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxInit( const int _Width, const int _Height, const bool _FullScreen = false, const int _ScreenScalar = 1 ) {
 	// Install Common Allegro Features //
 	allegro_init();
@@ -228,7 +248,7 @@ inline void gfxInit( const int _Width, const int _Height, const bool _FullScreen
 
 	Screen::Shape = Vector2D( Screen::Width, Screen::Height );
 	Screen::HalfShape = Screen::Shape * Real::Half;
-
+		
 	// Set our close button function //
 	Screen::CloseButtonPressed = false;
 	LOCK_FUNCTION( Screen::CloseButtonHandler );
@@ -245,6 +265,7 @@ inline void gfxInit( const int _Width, const int _Height, const bool _FullScreen
 	
 	// Create our drawing buffer //
 	Buffer = create_bitmap( Screen::Width, Screen::Height );
+	gfxResetClip();
 	
 	// Set the initial current color defaulting to white //
 	// (Note, makecol only works after set_gfx_mode) //

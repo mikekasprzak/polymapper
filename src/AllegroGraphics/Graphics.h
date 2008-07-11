@@ -64,10 +64,15 @@ public:
 	int Wheel;
 	int WheelOld;
 	
+	int ButtonCurrent;
+	int ButtonLast;
+	
 public:
 	cMouse() :
 		Wheel(mouse_z),
-		WheelOld(mouse_z)
+		WheelOld(mouse_z),
+		ButtonCurrent(mouse_b),
+		ButtonLast(mouse_b)
 	{
 	}
 	
@@ -78,15 +83,40 @@ public:
 			
 		WheelOld = Wheel;
 		Wheel = mouse_z;
+		
+		ButtonLast = ButtonCurrent;
+		ButtonCurrent = mouse_b;
 	}
-	
+
+public:
+	// - -------------------------------------------------------------------------------------- - //
 	inline const Vector2D Diff() const {
 		return Old - Pos;
 	}
-	
+	// - -------------------------------------------------------------------------------------- - //
 	inline const int WheelDiff() const {
 		return WheelOld - Wheel;
 	}
+	// - -------------------------------------------------------------------------------------- - //
+
+	// - -------------------------------------------------------------------------------------- - //
+	inline const int Button( const int Mask = -1 ) const {
+		return ButtonCurrent & Mask;
+	}
+	// - -------------------------------------------------------------------------------------- - //
+	inline const int Last( const int Mask = -1 ) const {
+		return ButtonLast & Mask;
+	}
+	// - -------------------------------------------------------------------------------------- - //
+	inline const bool Pressed( const int Mask = -1 ) const {
+		return (ButtonCurrent ^ ButtonLast) & ButtonCurrent & Mask;
+	}
+	// - -------------------------------------------------------------------------------------- - //
+	inline const bool Released( const int Mask = -1 ) const {
+		return (ButtonCurrent ^ ButtonLast) & ButtonLast & Mask;
+	}
+	// - -------------------------------------------------------------------------------------- - //
+
 };
 // - ------------------------------------------------------------------------------------------ - //
 extern cMouse Mouse;

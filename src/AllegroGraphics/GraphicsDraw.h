@@ -55,6 +55,14 @@ inline void gfxDrawRect( const Real P1x, const Real P1y, const Real P2x, const R
 	MatrixRect( Buffer, Matrix, Rect2D::Pair( Vector2D( P1x, P1y), Vector2D( P2x, P2y ) ), Color );
 }
 // - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawRectFill( const Vector2D& P1, const Vector2D& P2, const ColorType Color = CurrentColor ) {
+	MatrixRectFill( Buffer, Matrix, Rect2D::Pair( P1, P2 ), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline void gfxDrawRectFill( const Real P1x, const Real P1y, const Real P2x, const Real P2y, const ColorType Color = CurrentColor ) {
+	MatrixRectFill( Buffer, Matrix, Rect2D::Pair( Vector2D( P1x, P1y), Vector2D( P2x, P2y ) ), Color );
+}
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxDrawRectWithNormals( const Vector2D& P1, const Vector2D& P2, const ColorType Color = CurrentColor, const Real NormalLength = CurrentNormalLength, const ColorType NormalColor = CurrentNormalColor ) {
 	MatrixRectWithNormals( Buffer, Matrix, Rect2D::Pair( P1, P2 ), Color, NormalLength, NormalColor );
 }

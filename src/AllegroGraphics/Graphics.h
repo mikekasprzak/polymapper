@@ -34,6 +34,8 @@ typedef int ColorType;
 // - ------------------------------------------------------------------------------------------ - //
 extern BITMAP* Buffer;
 
+extern bool ShutdownGame;
+
 extern Matrix3x3 Matrix;
 extern std::vector<Matrix3x3>* MatrixStack;
 // - ------------------------------------------------------------------------------------------ - //
@@ -270,6 +272,8 @@ inline void gfxInit( const int _Width, const int _Height, const bool _FullScreen
 	install_keyboard();
 	install_mouse();
 	
+	ShutdownGame = false;
+	
 	// Store the requested screen dimensions //
 	Screen::Width = _Width;
 	Screen::Height = _Height;
@@ -329,7 +333,7 @@ inline void gfxExit( ) {
 	allegro_exit();
 }
 // - ------------------------------------------------------------------------------------------ - //
-inline bool gfxShutdown() {
+inline bool gfxHasShutdown() {
 	if ( key[KEY_ESC] )
 		return true;
 	
@@ -338,6 +342,12 @@ inline bool gfxShutdown() {
 	
 	if ( Screen::CloseButtonPressed )
 		return true;
+	
+	return ShutdownGame;
+}
+// - ------------------------------------------------------------------------------------------ - //
+inline bool gfxShutdown() {
+	ShutdownGame = true;
 }
 // - ------------------------------------------------------------------------------------------ - //
 

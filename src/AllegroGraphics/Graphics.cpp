@@ -3,6 +3,8 @@
 // - ------------------------------------------------------------------------------------------ - //
 BITMAP* Buffer;
 
+bool ShutdownGame;
+
 Matrix3x3 Matrix;
 
 std::vector<Matrix3x3>* MatrixStack;

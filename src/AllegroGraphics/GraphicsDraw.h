@@ -33,6 +33,29 @@ inline void gfxDrawX( const Vector2D& Center, const Real& Radius, const ColorTyp
 // - ------------------------------------------------------------------------------------------ - //
 
 // - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintf(p,c,_Format,_Args...) \
+	MatrixPrintf(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfLeft(p,c,_Format,_Args...) \
+	MatrixPrintfLeft(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfCenter(p,c,_Format,_Args...) \
+	MatrixPrintfCenter(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfRight(p,c,_Format,_Args...) \
+	MatrixPrintfRight(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfLeftCenter(p,c,_Format,_Args...) \
+	MatrixPrintfLeftCenter(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfCenterCenter(p,c,_Format,_Args...) \
+	MatrixPrintfCenterCenter(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+#define gfxPrintfRightCenter(p,c,_Format,_Args...) \
+	MatrixPrintfRightCenter(Buffer,Matrix,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+
+// - ------------------------------------------------------------------------------------------ - //
 inline void gfxDrawLine( const Vector2D& P1, const Vector2D& P2, const ColorType Color = CurrentColor) {
 	MatrixLine( Buffer, Matrix, P1, P2, Color );
 }

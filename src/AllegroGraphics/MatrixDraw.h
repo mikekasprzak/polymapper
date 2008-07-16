@@ -112,6 +112,67 @@ inline void MatrixRadiusX( BITMAP* Target, const Matrix3x3& Matrix, const Vector
 }
 // - ------------------------------------------------------------------------------------------ - //
 
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfCenterCenter(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	Vector2D Offset( text_length(font,StrBuff) >> 1, text_height(font) >> 1 ); \
+	MatrixPrint(t,m,(p)-Offset,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfRightCenter(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	Vector2D Offset( text_length(font,StrBuff), text_height(font) >> 1 ); \
+	MatrixPrint(t,m,(p)-Offset,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfLeftCenter(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	Vector2D Offset( 0, text_height(font) >> 1 ); \
+	MatrixPrint(t,m,(p)-Offset,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfCenter(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	Vector2D Offset( text_length(font,StrBuff) >> 1, 0 ); \
+	MatrixPrint(t,m,(p)-Offset,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfRight(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	Vector2D Offset( text_length(font,StrBuff), 0 ); \
+	MatrixPrint(t,m,(p)-Offset,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintfLeft(t,m,p,c,_Format,_Args...) \
+{ \
+	char StrBuff[1024]; \
+	sprintf( StrBuff, _Format, ## _Args ); \
+	MatrixPrint(t,m,p,c,StrBuff); \
+}
+// - ------------------------------------------------------------------------------------------ - //
+#define MatrixPrintf(t,m,p,c,_Format,_Args...) \
+	MatrixPrintfLeft(t,m,p,c,_Format, ## _Args)
+// - ------------------------------------------------------------------------------------------ - //
+inline void MatrixPrint( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& Pos, const int Color, const char* Msg) {
+	// Transform our point by the matrix //
+	Vector2D Point = Pos.ToHomoVector3D().ApplyMatrix( Matrix ).ToVector2D();
+
+	// Draw our text //
+	textout_ex( Target, font, Msg, (int)Point.x, (int)Point.y, Color, -1 );
+}
+// - ------------------------------------------------------------------------------------------ - //
+
+
 
 // - ------------------------------------------------------------------------------------------ - //
 inline void MatrixLine( BITMAP* Target, const Matrix3x3& Matrix, const Vector2D& P1, const Vector2D& P2, const int Color ) {

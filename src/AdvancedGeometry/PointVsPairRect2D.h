@@ -7,7 +7,7 @@
 
 // - ------------------------------------------------------------------------------------------ - //
 // NOTE: P2's components must be larger than P1's. //
-bool Test_Point_Vs_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
+inline bool Test_Point_Vs_PairRect2D( const Vector2D& v, const Vector2D& P1, const Vector2D& P2 ) {
 	if ( v.x >= P1.x )
 		if ( v.x < P2.x )
 			if ( v.y >= P1.y )

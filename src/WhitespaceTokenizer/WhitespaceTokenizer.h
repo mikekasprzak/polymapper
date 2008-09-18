@@ -78,6 +78,8 @@ public:
 	// - -------------------------------------------------------------------------------------- - //
 	// Steps the tokenizer to the next line, returns false if no lines left //
 	inline bool NextLine() {
+		bool FoundToken;
+		
 		// Loop until we're sure we find a line with a usable token //
 		do {
 			// Grab a whole line in to a string //
@@ -89,14 +91,14 @@ public:
 			Line << TempString;
 			
 			// Read the next token //
-			NextToken();
+			FoundToken = NextToken();
 			
 			// In case we happen to breach the end of Data, no token found //
 			if ( Data.eof() )
 				return false;
 			
 			CurrentLine++;
-		} while ( Line.eof() );
+		} while ( !FoundToken );
 		
 		// Token found //
 		return true;

@@ -13,10 +13,13 @@ class cWhitespaceTokenizer {
 	std::stringstream Data;
 	std::stringstream Line;
 	std::string CurrentToken;
-		
 public:
+	int CurrentLine;
+
 	// - -------------------------------------------------------------------------------------- - //
-	inline cWhitespaceTokenizer() {
+	inline cWhitespaceTokenizer() :
+		CurrentLine(0)
+	{
 	}
 	// - -------------------------------------------------------------------------------------- - //
 	inline cWhitespaceTokenizer( const char* FileName ) {
@@ -28,6 +31,8 @@ public:
 	}
 	// - -------------------------------------------------------------------------------------- - //
 	inline bool Load( const DataBlock* Block ) {
+		CurrentLine = 0;
+		
 		Data.clear();
 		Data << std::string( (const char*)Block->Data, Block->Size );
 		
@@ -37,6 +42,8 @@ public:
 		return true;
 	}	// - -------------------------------------------------------------------------------------- - //
 	inline bool Load( const char* FileName ) {
+		CurrentLine = 0;
+		
 		DataBlock* Block = new_DataBlock( FileName );
 		if ( Block == 0 )
 			return false;
@@ -75,7 +82,9 @@ public:
 		do {
 			// Grab a whole line in to a string //
 			std::string TempString;
+			TempString.clear();
 			getline( Data, TempString );
+			Line.str( "" );
 			Line.clear();
 			Line << TempString;
 			
@@ -85,6 +94,8 @@ public:
 			// In case we happen to breach the end of Data, no token found //
 			if ( Data.eof() )
 				return false;
+			
+			CurrentLine++;
 		} while ( Line.eof() );
 		
 		// Token found //
@@ -130,6 +141,11 @@ public:
 	// Returns true if the next token exists //
 	inline bool IsTokenAvailable() const {
 		return !Line.eof();
+	}
+	// - -------------------------------------------------------------------------------------- - //	
+	// Returns true if the next token exists //
+	inline const char* GetLine() const {
+		return Line.str().c_str();
 	}
 	// - -------------------------------------------------------------------------------------- - //
 
